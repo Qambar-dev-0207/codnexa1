@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codnexa | Strategy, Design & Development Studio</title>
+  <meta name="description" content="Codnexa is a premium strategy, design and development studio. We build high-fidelity digital platforms, brand identities, and software services for ambitious brands.">
+  
+  <!-- SEO Meta Tags -->
+  <meta property="og:title" content="Codnexa | Strategy, Design & Development Studio">
+  <meta property="og:description" content="We build high-fidelity digital platforms, brand identities, and software services for ambitious brands.">
+  <meta property="og:type" content="website">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- Custom Trailing Cursor -->
+  <div class="custom-cursor-dot" id="cursor-dot"></div>
+  <div class="custom-cursor-ring" id="cursor-ring"></div>
+
+  <!-- Sticky Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo" data-cursor="hover">Codnexa<span class="logo-dot">.</span></a>
+      
+      <!-- Desktop Nav Links -->
+      <div class="nav-links">
+        <a href="#services" class="nav-link" data-cursor="hover">Services</a>
+        <a href="#work" class="nav-link" data-cursor="hover">Work</a>
+        <a href="#journal" class="nav-link" data-cursor="hover">Journal</a>
+        <a href="#contact" class="nav-link btn-nav-cta" data-cursor="hover">Start a Project</a>
+      </div>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Menu" data-cursor="hover">
+        <span class="toggle-line line-1"></span>
+        <span class="toggle-line line-2"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-inner">
+      <div class="mobile-menu-links">
+        <a href="#services" class="mobile-menu-link">Services</a>
+        <a href="#work" class="mobile-menu-link">Work</a>
+        <a href="#journal" class="mobile-menu-link">Journal</a>
+        <a href="#contact" class="mobile-menu-link mobile-btn-cta">Start a Project</a>
+      </div>
+      <div class="mobile-menu-footer">
+        <a href="mailto:hello@codnexa.com" class="mobile-mail">hello@codnexa.com</a>
+        <div class="mobile-socials">
+          <a href="#">LinkedIn</a>
+          <a href="#">X / Twitter</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <header class="hero-section">
+      <!-- Animated Canvas Background -->
+      <canvas id="hero-canvas" class="hero-canvas"></canvas>
+      
+      <div class="container hero-content">
+        <div class="hero-badge animate-on-scroll">DIGITAL CREATIVE STUDIO</div>
+        <h1 class="hero-title animate-on-scroll">
+          Creative studio built for <em>growth.</em>
+        </h1>
+        <p class="hero-subtitle animate-on-scroll">
+          Strategy, design and development. From brand identities and motion design to full-scale platforms and custom software, we make what companies need to lead.
+        </p>
+        <div class="hero-actions animate-on-scroll">
+          <a href="#work" class="btn btn-primary" data-cursor="hover">See all work</a>
+          <a href="#contact" class="btn btn-secondary" data-cursor="hover">Start a project</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Services / What We Do Section -->
+    <section id="services" class="services-section section-padding">
+      <div class="container">
+        <div class="section-header animate-on-scroll">
+          <span class="section-eyebrow">Expertise</span>
+          <h2 class="section-title">What we do</h2>
+        </div>
+
+        <div class="services-grid">
+          <!-- Service Card 1 -->
+          <div class="service-item animate-on-scroll" data-index="1">
+            <div class="service-summary">
+              <span class="service-num">01</span>
+              <h3 class="service-name">Strategy</h3>
+              <button class="service-toggle" aria-label="Expand service description" data-cursor="hover">
+                <span class="plus-icon"></span>
+              </button>
+            </div>
+            <div class="service-details">
+              <div class="service-details-inner">
+                <p>We align business ambitions with market opportunities. Through research, positioning, and mapping, we define the roadmap for your digital success.</p>
+                <ul class="service-features">
+                  <li>Market & User Research</li>
+                  <li>Product Positioning</li>
+                  <li>Technical Architecture Mapping</li>
+                  <li>Brand Strategy</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service Card 2 -->
+          <div class="service-item animate-on-scroll" data-index="2">
+            <div class="service-summary">
+              <span class="service-num">02</span>
+              <h3 class="service-name">Creative & Design</h3>
+              <button class="service-toggle" aria-label="Expand service description" data-cursor="hover">
+                <span class="plus-icon"></span>
+              </button>
+            </div>
+            <div class="service-details">
+              <div class="service-details-inner">
+                <p>We design interfaces that capture attention and evoke emotion. Balancing strict usability principles with visual art, we design digital interfaces that stand out.</p>
+                <ul class="service-features">
+                  <li>UI/UX Interface Design</li>
+                  <li>Brand Identity & Styleguides</li>
+                  <li>Motion Design & Interactions</li>
+                  <li>3D Visuals & Prototypes</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service Card 3 -->
+          <div class="service-item animate-on-scroll" data-index="3">
+            <div class="service-summary">
+              <span class="service-num">03</span>
+              <h3 class="service-name">Development</h3>
+              <button class="service-toggle" aria-label="Expand service description" data-cursor="hover">
+                <span class="plus-icon"></span>
+              </button>
+            </div>
+            <div class="service-details">
+              <div class="service-details-inner">
+                <p>We craft high-performance codebases built to scale. Using modern tech stacks, we translate designs into lightning-fast, secure, and accessible products.</p>
+                <ul class="service-features">
+                  <li>Front-end Engineering</li>
+                  <li>Full-Stack Software Architecture</li>
+                  <li>API Integrations</li>
+                  <li>Performance & SEO Optimization</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Selected Work Grid Section -->
+    <section id="work" class="work-section section-padding">
+      <div class="container">
+        <div class="section-header animate-on-scroll">
+          <span class="section-eyebrow">Case Studies</span>
+          <h2 class="section-title">Selected Work</h2>
+        </div>
+
+        <div class="work-grid">
+          <!-- Work Card 1 -->
+          <div class="work-card animate-on-scroll" data-cursor="hover">
+            <div class="work-img-container">
+              <img src="assets/project-aether.png" alt="Aether SaaS Dashboard Mockup" loading="lazy" class="work-img">
+              <div class="work-overlay">
+                <span class="work-view-tag">View Project &rarr;</span>
+              </div>
+            </div>
+            <div class="work-meta">
+              <div class="work-tags">
+                <span class="work-tag">SaaS</span>
+                <span class="work-tag">Product Design</span>
+              </div>
+              <h3 class="work-card-title">Aether Platform</h3>
+              <p class="work-desc">An ultra-minimalist, dark-first dashboard visualizing cloud resource allocations dynamically.</p>
+            </div>
+          </div>
+
+          <!-- Work Card 2 -->
+          <div class="work-card animate-on-scroll" data-cursor="hover">
+            <div class="work-img-container">
+              <img src="assets/project-velo.png" alt="Velo Brand Identity Mockup" loading="lazy" class="work-img">
+              <div class="work-overlay">
+                <span class="work-view-tag">View Project &rarr;</span>
+              </div>
+            </div>
+            <div class="work-meta">
+              <div class="work-tags">
+                <span class="work-tag">Identity</span>
+                <span class="work-tag">Web Design</span>
+              </div>
+              <h3 class="work-card-title">Velo Mobility</h3>
+              <p class="work-desc">A premium brand redesign and digital experience for a next-generation urban mobility provider.</p>
+            </div>
+          </div>
+
+          <!-- Work Card 3 -->
+          <div class="work-card animate-on-scroll" data-cursor="hover">
+            <div class="work-img-container">
+              <img src="assets/project-nucleus.png" alt="Nucleus AI Platform Mockup" loading="lazy" class="work-img">
+              <div class="work-overlay">
+                <span class="work-view-tag">View Project &rarr;</span>
+              </div>
+            </div>
+            <div class="work-meta">
+              <div class="work-tags">
+                <span class="work-tag">AI/ML</span>
+                <span class="work-tag">Development</span>
+              </div>
+              <h3 class="work-card-title">Nucleus AI</h3>
+              <p class="work-desc">Interactive node-graph system representing model architectures and token flow paths in real-time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Journal Section -->
+    <section id="journal" class="journal-section section-padding">
+      <div class="container">
+        <div class="section-header animate-on-scroll">
+          <span class="section-eyebrow">Insights</span>
+          <h2 class="section-title">Journal</h2>
+        </div>
+
+        <div class="journal-list">
+          <!-- Journal Item 1 -->
+          <article class="journal-item animate-on-scroll">
+            <div class="journal-date">June 23, 2026</div>
+            <div class="journal-content">
+              <h3 class="journal-title">
+                <a href="#" class="journal-link" data-cursor="hover">When a design system is worth it, and when it's overkill</a>
+              </h3>
+              <p class="journal-summary">An in-depth analysis of structural engineering for digital products and determining the precise scale at which component libraries become profitable.</p>
+            </div>
+          </article>
+
+          <!-- Journal Item 2 -->
+          <article class="journal-item animate-on-scroll">
+            <div class="journal-date">May 14, 2026</div>
+            <div class="journal-content">
+              <h3 class="journal-title">
+                <a href="#" class="journal-link" data-cursor="hover">What a first call tells you that a proposal cannot</a>
+              </h3>
+              <p class="journal-summary">Decoding chemistry and technical alignment. Why face-to-face planning diagnostics outperform written proposals for long-term systems engineering.</p>
+            </div>
+          </article>
+
+          <!-- Journal Item 3 -->
+          <article class="journal-item animate-on-scroll">
+            <div class="journal-date">April 08, 2026</div>
+            <div class="journal-content">
+              <h3 class="journal-title">
+                <a href="#" class="journal-link" data-cursor="hover">Webflow or Custom Development: who owns the site after launch?</a>
+              </h3>
+              <p class="journal-summary">Exploring lock-in, extensibility, and maintenance. Choosing the right runtime architecture for your marketing and product infrastructure.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inquiry CTA / Contact Section -->
+    <section id="contact" class="contact-section section-padding">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info animate-on-scroll">
+            <h2 class="contact-title">Have a project in mind? <br><em>Let's see it through.</em></h2>
+            <p class="contact-desc">We collaborate with forward-thinking teams to design and build digital platforms that scale. Reach out, and we'll schedule an initial engineering diagnostic call.</p>
+            
+            <div class="contact-channels">
+              <div class="channel">
+                <span class="channel-label">General Inquiries</span>
+                <a href="mailto:hello@codnexa.com" class="channel-link" data-cursor="hover">hello@codnexa.com</a>
+              </div>
+              <div class="channel">
+                <span class="channel-label">New Projects</span>
+                <a href="mailto:build@codnexa.com" class="channel-link" data-cursor="hover">build@codnexa.com</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-wrapper animate-on-scroll">
+            <form id="project-form" class="contact-form">
+              <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Jane Doe" class="form-input">
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" required placeholder="jane@example.com" class="form-input">
+              </div>
+
+              <div class="form-group">
+                <label for="service-type" class="form-label">What do you need help with?</label>
+                <select id="service-type" name="service-type" class="form-input form-select">
+                  <option value="all">Strategy, Design & Development</option>
+                  <option value="strategy">Strategy & Architecture Planning</option>
+                  <option value="design">UI/UX & Creative Identity</option>
+                  <option value="dev">Full-Stack Development</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message" class="form-label">Project Details</label>
+                <textarea id="message" name="message" rows="4" required placeholder="Tell us about your project, timeline, and goals..." class="form-input form-textarea"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-submit" data-cursor="hover">
+                Submit Inquiry
+              </button>
+            </form>
+            
+            <!-- Success Overlay -->
+            <div class="form-success-overlay" id="form-success">
+              <div class="success-message">
+                <div class="success-icon">&check;</div>
+                <h3 class="success-title">Inquiry Received</h3>
+                <p>Thank you. Our engineering team will review your brief and follow up within 24 hours.</p>
+                <button class="btn btn-secondary btn-close-success" id="btn-close-success" data-cursor="hover">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="footer-logo">Codnexa<span class="logo-dot">.</span></a>
+        <p class="footer-slogan">We build what companies need to lead.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Studio</h4>
+        <ul class="footer-links">
+          <li><a href="#services" data-cursor="hover">Services</a></li>
+          <li><a href="#work" data-cursor="hover">Selected Work</a></li>
+          <li><a href="#journal" data-cursor="hover">Journal</a></li>
+          <li><a href="#" data-cursor="hover">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Social</h4>
+        <ul class="footer-links">
+          <li><a href="#" target="_blank" rel="noopener" data-cursor="hover">LinkedIn</a></li>
+          <li><a href="#" target="_blank" rel="noopener" data-cursor="hover">X / Twitter</a></li>
+          <li><a href="#" target="_blank" rel="noopener" data-cursor="hover">Instagram</a></li>
+          <li><a href="#" target="_blank" rel="noopener" data-cursor="hover">Dribbble</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Legal</h4>
+        <ul class="footer-links">
+          <li><a href="#" data-cursor="hover">Privacy Policy</a></li>
+          <li><a href="#" data-cursor="hover">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="container footer-bottom">
+      <p class="copyright">&copy; 2026 Codnexa Studio. All rights reserved.</p>
+      <p class="timezone">Current Node: GMT+5:30</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript Behavior File -->
+  <script src="index.js"></script>
+</body>
+</html>
