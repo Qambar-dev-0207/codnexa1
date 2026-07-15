@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CustomCursor from '@/components/CustomCursor';
+import Preloader from '@/components/Preloader';
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: '--font-heading',
@@ -41,6 +42,7 @@ export default function RootLayout({
     <html lang="en" className={`${cormorantGaramond.variable} ${inter.variable}`}>
       <body className="noise" style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
         <ThemeProvider>
+          <Preloader />
           <CustomCursor />
           <Navbar />
           <main style={{ flex: 1 }}>
@@ -52,3 +54,4 @@ export default function RootLayout({
     </html>
   );
 }
+

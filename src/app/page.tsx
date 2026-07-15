@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import HeroCanvas from '@/components/HeroCanvas';
+import DecryptedText from '@/components/DecryptedText';
 
 /* ---------- Scroll Reveal Hook ---------- */
 function useReveal() {
@@ -50,6 +52,28 @@ const MARQUEE_ITEMS = [
 export default function Home() {
   useReveal();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!heroRef.current) return;
+      const rect = heroRef.current.getBoundingClientRect();
+      setMousePos({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      });
+    };
+    const heroEl = heroRef.current;
+    if (heroEl) {
+      heroEl.addEventListener('mousemove', handleMouseMove, { passive: true });
+    }
+    return () => {
+      if (heroEl) {
+        heroEl.removeEventListener('mousemove', handleMouseMove);
+      }
+    };
+  }, []);
 
   const services = [
     { num: '01', label: 'Brand & Graphics',   title: 'Creative & UI Design',  desc: 'Interfaces that capture identity and establish functional patterns.' },
@@ -69,14 +93,32 @@ export default function Home() {
     <div>
 
       {/* -- HERO ----------------------------------------------- */}
-      <section style={{
-        minHeight: '100svh',
-        display: 'grid',
-        gridTemplateRows: '1fr auto',
-        borderBottom: '1px solid var(--border)',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
+      <section
+        ref={heroRef}
+        style={{
+          minHeight: '100svh',
+          display: 'grid',
+          gridTemplateRows: '1fr auto',
+          borderBottom: '1px solid var(--border)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Particle Canvas Animation */}
+        <HeroCanvas />
+
+        {/* Dynamic Interactive Spotlight Glow */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: `radial-gradient(700px circle at ${mousePos.x}px ${mousePos.y}px, rgba(230, 58, 15, 0.075), transparent 80%)`,
+            pointerEvents: 'none',
+            zIndex: 0,
+            transition: 'background 0.15s ease',
+          }}
+        />
+
         {/* Subtle grid background */}
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)', backgroundSize: '80px 80px', opacity: 0.4, pointerEvents: 'none' }} />
 
@@ -84,7 +126,9 @@ export default function Home() {
           <p className="eyebrow reveal" style={{ marginBottom: 28 }}>Strategy, Design & Development Studio</p>
 
           <h1 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(4.5rem, 10vw, 9rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.035em', lineHeight: 1.0, color: 'var(--text)', marginBottom: 32, maxWidth: 900 }}>
-            Creative studio<br />built for <em style={{ color: 'var(--text)' }}>growth.</em>
+            <DecryptedText text="Creative studio" />
+            <br />
+            built for <em style={{ color: 'var(--text)' }}><DecryptedText text="growth." delay={300} /></em>
           </h1>
 
           <p className="reveal reveal-delay-2" style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: 520, marginBottom: 48 }}>
@@ -92,10 +136,10 @@ export default function Home() {
           </p>
 
           <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/portfolio" className="btn btn-primary">
+            <Link href="/portfolio" className="btn btn-primary" data-cursor="hover">
               See our work <ArrowUpRight size={15} />
             </Link>
-            <Link href="/contact" className="btn btn-outline">
+            <Link href="/contact" className="btn btn-outline" data-cursor="hover">
               Start a project
             </Link>
           </div>
@@ -106,7 +150,9 @@ export default function Home() {
           <div style={{ display: 'flex', gap: 48 }}>
             {[['50+', 'Projects Delivered'], ['8+', 'Years Experience'], ['98%', 'Client Retention']].map(([n, l]) => (
               <div key={l}>
-                <div style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', fontWeight: 300, lineHeight: 1, color: 'var(--text)' }}>{n}</div>
+                <div style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', fontWeight: 300, lineHeight: 1, color: 'var(--text)' }}>
+                  <Counter to={parseInt(n)} suffix={n.includes('+') ? '+' : n.includes('%') ? '%' : ''} />
+                </div>
                 <div style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', marginTop: 4 }}>{l}</div>
               </div>
             ))}
@@ -117,6 +163,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
 
       {/* -- MARQUEE -------------------------------------------- */}
       <div className="marquee-track" style={{ borderBottom: '1px solid var(--border)', paddingBlock: 18, background: 'var(--bg-alt)' }}>
@@ -129,15 +176,17 @@ export default function Home() {
         </div>
       </div>
 
+
       {/* -- WHAT WE DO ----------------------------------------- */}
       <section className="section">
+
         <div className="container">
           {/* Header row */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, marginBottom: 80, alignItems: 'end' }} className="what-we-do-header">
             <div>
               <p className="eyebrow reveal" style={{ marginBottom: 20 }}>What we do</p>
               <h2 className="reveal reveal-delay-1" style={{ maxWidth: 560, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
-                Aligning product aesthetics with robust code.
+                <DecryptedText text="Aligning product aesthetics with robust code." />
               </h2>
             </div>
             <p className="reveal reveal-delay-2" style={{ alignSelf: 'end', maxWidth: 440 }}>
@@ -189,7 +238,9 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 64 }} className="why-grid">
             <div>
               <p className="eyebrow reveal" style={{ marginBottom: 20 }}>Our DNA</p>
-              <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>Why leading brands choose<br />Codnexa</h2>
+              <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
+                <DecryptedText text="Why leading brands choose Codnexa" />
+              </h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
               {[
@@ -215,12 +266,15 @@ export default function Home() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, flexWrap: 'wrap', gap: 20 }}>
             <div>
               <p className="eyebrow reveal" style={{ marginBottom: 16 }}>Selected Work</p>
-              <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>Work we&apos;re proud of</h2>
+              <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
+                <DecryptedText text="Work we're proud of" />
+              </h2>
             </div>
             <Link href="/portfolio" className="reveal btn btn-outline">
               View all <ArrowUpRight size={14} />
             </Link>
           </div>
+
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
             {[
