@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import PortfolioGrid from '@/components/PortfolioGrid';
 import TestimonialsSlider from '@/components/TestimonialsSlider';
+import { useLanguage } from '@/components/LanguageProvider';
 
 function useReveal() {
   useEffect(() => {
@@ -19,24 +20,26 @@ function useReveal() {
 
 export default function Portfolio() {
   useReveal();
+  const { t } = useLanguage();
 
   return (
     <div>
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section style={{ paddingTop: 'clamp(120px, 18vw, 200px)', paddingBottom: 'clamp(60px, 8vw, 100px)', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-        {/* Subtle accent glow top-right */}
         <div style={{ position: 'absolute', top: -100, right: -100, width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(230,58,15,0.04) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 48, alignItems: 'end' }} className="hero-grid">
             <div>
-              <p className="eyebrow reveal" style={{ marginBottom: 24 }}>Selected Work</p>
+              <p className="eyebrow reveal" style={{ marginBottom: 24 }}>{t('portfolio.hero.eyebrow')}</p>
               <h1 className="reveal reveal-delay-1">
-                Case studies &<br /><em>digital platforms.</em>
+                {t('portfolio.hero.title').split('\n').map((line, i) => (
+                  <span key={i}>{i === 0 ? line : <><br /><em>{line}</em></>}</span>
+                ))}
               </h1>
             </div>
             <p className="reveal reveal-delay-2" style={{ maxWidth: 360, alignSelf: 'end', paddingBottom: 8 }}>
-              We collaborate with ambitious startups and world-leading brands to engineer clean, performant, and high-converting systems.
+              {t('portfolio.hero.desc')}
             </p>
           </div>
         </div>
@@ -69,40 +72,19 @@ export default function Portfolio() {
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 64, alignItems: 'start' }} className="testi-grid">
             <div className="sticky-column">
-              <p className="eyebrow reveal" style={{ marginBottom: 20 }}>Endorsements</p>
+              <p className="eyebrow reveal" style={{ marginBottom: 20 }}>{t('portfolio.testimonials.eyebrow')}</p>
               <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05 }}>
-                What clients<br />say about us
+                {t('portfolio.testimonials.title').split('\n').map((line, i) => (
+                  <span key={i}>{line}{i === 0 && <br />}</span>
+                ))}
               </h2>
               <p className="reveal reveal-delay-2" style={{ marginTop: 20, fontSize: '0.88rem' }}>
-                We measure success by the outcomes we drive for our clients, not just by shipping code.
+                {t('portfolio.testimonials.desc')}
               </p>
             </div>
             <div className="reveal reveal-delay-1">
               <TestimonialsSlider />
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── FEATURED CLIENTS LOGOS (placeholder) ─────────────── */}
-      <section style={{ borderBottom: '1px solid var(--border)', paddingBlock: 'clamp(40px, 6vw, 72px)', background: 'var(--bg-alt)' }}>
-        <div className="container">
-          <p className="reveal" style={{ fontSize: '0.7rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600, marginBottom: 32, textAlign: 'center' }}>
-            Trusted by innovative teams worldwide
-          </p>
-          <div className="reveal" style={{ display: 'flex', gap: 0, justifyContent: 'center', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
-            {['Aether', 'Velo', 'Nucleus', 'Slate', 'Apex', 'Synthetix'].map((name, i) => (
-              <div key={name} style={{
-                flex: 1, padding: '28px 20px', textAlign: 'center',
-                borderRight: i < 5 ? '1px solid var(--border)' : 'none',
-                fontFamily: 'var(--font-serif)', fontSize: '1.05rem', fontWeight: 400,
-                color: 'var(--text-3)', letterSpacing: '-0.01em',
-                transition: 'color 0.25s',
-              }}
-              onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.color = 'var(--text)')}
-              onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.color = 'var(--text-3)')}
-              >{name}</div>
-            ))}
           </div>
         </div>
       </section>
@@ -120,10 +102,10 @@ export default function Portfolio() {
           </h2>
           <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/contact" className="btn btn-primary">
-              Book a Discovery Call <ArrowUpRight size={15} />
+              {t('home.cta.btn')} <ArrowUpRight size={15} />
             </Link>
             <Link href="/services" className="btn btn-outline">
-              Explore services
+              {t('nav.services')}
             </Link>
           </div>
         </div>
@@ -133,10 +115,6 @@ export default function Portfolio() {
         @media (max-width: 768px) {
           .hero-grid   { grid-template-columns: 1fr !important; }
           .testi-grid  { grid-template-columns: 1fr !important; }
-          [style*="flex: 1"][style*="borderRight"] { display: none; }
-        }
-        @media (max-width: 640px) {
-          [style*="grid-template-columns: repeat(auto-fit, minmax(180px"] { grid-template-columns: repeat(2, 1fr) !important; }
         }
       `}</style>
     </div>

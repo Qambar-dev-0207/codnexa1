@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Plus, Minus } from 'lucide-react';
+import { useLanguage } from '@/components/LanguageProvider';
 
 function useReveal() {
   useEffect(() => {
@@ -21,7 +22,7 @@ const services = [
     num: '01',
     category: 'Brand & Graphics',
     title: 'Creative & UI Design',
-    desc: 'We craft digital identities that capture your brand\'s essence â€” from logo systems and visual languages to pixel-perfect interfaces and motion design. Every pixel is intentional.',
+    desc: 'We craft digital identities that capture your brand\'s essence — from logo systems and visual languages to pixel-perfect interfaces and motion design. Every pixel is intentional.',
     deliverables: ['Brand Identity Systems', 'UI / UX Design', 'Motion Design', 'Design Systems', 'Prototyping & Wireframes'],
   },
   {
@@ -42,7 +43,7 @@ const services = [
     num: '04',
     category: 'Cloud',
     title: 'Infrastructure & DevOps',
-    desc: 'We plan and deploy cloud infrastructure that scales elastically with your growth â€” zero-downtime deploys, CI/CD pipelines, monitoring, and security hardening.',
+    desc: 'We plan and deploy cloud infrastructure that scales elastically with your growth — zero-downtime deploys, CI/CD pipelines, monitoring, and security hardening.',
     deliverables: ['AWS / GCP / Azure', 'CI/CD Pipelines', 'Docker & Kubernetes', 'Monitoring & Alerting', 'Security Hardening'],
   },
   {
@@ -56,21 +57,22 @@ const services = [
     num: '06',
     category: 'AI & Data',
     title: 'AI Integration',
-    desc: 'Embed intelligent capabilities into your product â€” LLM-powered features, recommendation engines, computer vision pipelines, and AI-driven analytics dashboards.',
+    desc: 'Embed intelligent capabilities into your product — LLM-powered features, recommendation engines, computer vision pipelines, and AI-driven analytics dashboards.',
     deliverables: ['LLM Integration (GPT / Gemini)', 'RAG Pipelines', 'Custom AI Features', 'Data Visualisation', 'Predictive Analytics'],
   },
 ];
 
 const process = [
   { n: '01', title: 'Discovery', desc: 'Understanding your goals, users, constraints, and competitive landscape through deep-dive workshops.' },
-  { n: '02', title: 'Strategy', desc: 'Defining the product architecture, tech stack, and design direction before a single line of code is written.' },
-  { n: '03', title: 'Design', desc: 'High-fidelity UI/UX design with interactive prototypes, design systems, and stakeholder review cycles.' },
-  { n: '04', title: 'Build', desc: 'Weekly sprint-based development with continuous deployment, daily updates, and real-time collaboration.' },
-  { n: '05', title: 'Launch', desc: 'Production-ready deployment, performance audits, documentation, and team handoff or ongoing retainer.' },
+  { n: '02', title: 'Strategy',  desc: 'Defining the product architecture, tech stack, and design direction before a single line of code is written.' },
+  { n: '03', title: 'Design',    desc: 'High-fidelity UI/UX design with interactive prototypes, design systems, and stakeholder review cycles.' },
+  { n: '04', title: 'Build',     desc: 'Weekly sprint-based development with continuous deployment, daily updates, and real-time collaboration.' },
+  { n: '05', title: 'Launch',    desc: 'Production-ready deployment, performance audits, documentation, and team handoff or ongoing retainer.' },
 ];
 
 export default function Services() {
   useReveal();
+  const { t } = useLanguage();
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -78,12 +80,14 @@ export default function Services() {
       {/* -- HEADER ------------------------------------------- */}
       <section style={{ paddingTop: 'clamp(120px, 18vw, 200px)', paddingBottom: 'clamp(60px, 8vw, 100px)', borderBottom: '1px solid var(--border)' }}>
         <div className="container">
-          <p className="eyebrow reveal" style={{ marginBottom: 24 }}>Our Services</p>
-          <h1 className="reveal reveal-delay-1" style={{ maxWidth: 700, fontSize: "clamp(4rem, 9vw, 8rem)", fontFamily: "var(--font-serif)", fontWeight: 300, letterSpacing: "-0.03em", lineHeight: 1.0, color: "var(--text)" }}>
-            What we<br /><em>offer.</em>
+          <p className="eyebrow reveal" style={{ marginBottom: 24 }}>{t('services.hero.eyebrow')}</p>
+          <h1 className="reveal reveal-delay-1" style={{ maxWidth: 700, fontSize: 'clamp(4rem, 9vw, 8rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.0, color: 'var(--text)' }}>
+            {t('services.hero.title').split('\n').map((line, i) => (
+              <span key={i}>{i === 0 ? line : <><br /><em>{line}</em></>}</span>
+            ))}
           </h1>
           <p className="reveal reveal-delay-2" style={{ marginTop: 32, maxWidth: 480, fontSize: '1.05rem' }}>
-            Strategy, design and development. From brand identities to full-scale platforms and software â€” we make what companies need to lead.
+            {t('services.hero.desc')}
           </p>
         </div>
       </section>
@@ -99,11 +103,7 @@ export default function Services() {
                   <button
                     onClick={() => setOpen(isOpen ? null : i)}
                     className="accordion-btn"
-                    style={{
-                      width: '100%', paddingBlock: 32,
-                      background: 'transparent', border: 'none', cursor: 'pointer',
-                      textAlign: 'left', transition: 'background 0.2s',
-                    }}
+                    style={{ width: '100%', paddingBlock: 32, background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', transition: 'background 0.2s' }}
                     onMouseEnter={e => (e.currentTarget.style.background = 'var(--surface)')}
                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                   >
@@ -145,10 +145,14 @@ export default function Services() {
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 64, alignItems: 'start' }} className="process-grid">
             <div className="sticky-column">
-              <p className="eyebrow reveal" style={{ marginBottom: 20 }}>Our Process</p>
-              <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1.05 }}>How we<br />work</h2>
+              <p className="eyebrow reveal" style={{ marginBottom: 20 }}>{t('services.process.eyebrow')}</p>
+              <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1.05 }}>
+                {t('services.process.title').split('\n').map((line, i) => (
+                  <span key={i}>{line}{i === 0 && <br />}</span>
+                ))}
+              </h2>
               <p className="reveal reveal-delay-2" style={{ marginTop: 20, fontSize: '0.9rem' }}>
-                Every engagement follows a structured workflow designed for clarity, speed, and quality.
+                {t('services.process.desc')}
               </p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0, borderTop: '1px solid var(--border)' }}>
@@ -169,12 +173,12 @@ export default function Services() {
       {/* -- CTA ---------------------------------------------- */}
       <section style={{ paddingBlock: 'clamp(80px, 12vw, 140px)', textAlign: 'center', borderBottom: '1px solid var(--border)' }}>
         <div className="container">
-          <h2 className="reveal font-heading" style={{ marginBottom: 16, maxWidth: 700, marginInline: "auto", fontSize: "clamp(3rem, 6vw, 5rem)", fontFamily: "var(--font-serif)", fontWeight: 300, letterSpacing: "-0.025em", lineHeight: 1.05 }}>
-            Ready to start your project?
+          <h2 className="reveal font-heading" style={{ marginBottom: 16, maxWidth: 700, marginInline: 'auto', fontSize: 'clamp(3rem, 6vw, 5rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1.05 }}>
+            {t('services.cta.title')}
           </h2>
-          <p className="reveal reveal-delay-1" style={{ marginBottom: 40 }}>Book a free discovery call and we&apos;ll scope out your vision together.</p>
+          <p className="reveal reveal-delay-1" style={{ marginBottom: 40 }}>{t('services.cta.desc')}</p>
           <Link href="/contact" className="btn btn-primary reveal reveal-delay-2">
-            Book a Discovery Call <ArrowUpRight size={15} />
+            {t('services.cta.btn')} <ArrowUpRight size={15} />
           </Link>
         </div>
       </section>

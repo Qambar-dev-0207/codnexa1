@@ -8,6 +8,7 @@ import HeroCanvas from '@/components/HeroCanvas';
 import DecryptedText from '@/components/DecryptedText';
 import TypewriterWord from '@/components/TypewriterWord';
 import SplitText from '@/components/SplitText';
+import { useLanguage } from '@/components/LanguageProvider';
 
 /* ---------- Scroll Reveal Hook ---------- */
 function useReveal() {
@@ -159,6 +160,7 @@ const MARQUEE_ITEMS = [
 
 export default function Home() {
   useReveal();
+  const { t } = useLanguage();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLDivElement>(null);
@@ -167,27 +169,18 @@ export default function Home() {
     const handleMouseMove = (e: MouseEvent) => {
       if (!heroRef.current) return;
       const rect = heroRef.current.getBoundingClientRect();
-      setMousePos({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
+      setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     };
     const heroEl = heroRef.current;
-    if (heroEl) {
-      heroEl.addEventListener('mousemove', handleMouseMove, { passive: true });
-    }
-    return () => {
-      if (heroEl) {
-        heroEl.removeEventListener('mousemove', handleMouseMove);
-      }
-    };
+    if (heroEl) heroEl.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => { if (heroEl) heroEl.removeEventListener('mousemove', handleMouseMove); };
   }, []);
 
   const services = [
     { num: '01', label: 'Brand & Graphics',   title: 'Creative & UI Design',  desc: 'Interfaces that capture identity and establish functional patterns.' },
-    { num: '02', label: 'Interfaces',         title: 'Front-End Systems',     desc: 'Pixel-perfect React and Next.js platforms optimised for speed.' },
-    { num: '03', label: 'Code Stacks',        title: 'Full-Stack Scale',      desc: 'Secure backend databases, third-party integrations, and robust APIs.' },
-    { num: '04', label: 'Architecture',       title: 'Cloud Planning',        desc: 'Deploying secure and elastic AWS / Vercel pipelines for uptime.' },
+    { num: '02', label: 'Interfaces',          title: 'Front-End Systems',     desc: 'Pixel-perfect React and Next.js platforms optimised for speed.' },
+    { num: '03', label: 'Code Stacks',         title: 'Full-Stack Scale',      desc: 'Secure backend databases, third-party integrations, and robust APIs.' },
+    { num: '04', label: 'Architecture',        title: 'Cloud Planning',        desc: 'Deploying secure and elastic AWS / Vercel pipelines for uptime.' },
   ];
 
   const faqs = [
@@ -195,6 +188,13 @@ export default function Home() {
     { q: 'Do we own the source code after launch?',               a: 'Yes, absolutely. Once final accounts are settled, full ownership rights of all assets, designs, codebases, and deployment configurations are transferred to your team.' },
     { q: 'How do you handle project scoping and budget agreements?', a: 'We offer fixed scoping diagnostics for projects with clear specifications, and flexible time-and-materials arrangements for fast-moving products requiring agile adjustments.' },
     { q: 'Do you support direct Slack or Teams communication?',   a: 'Yes, we create shared Slack channels with your engineering team, facilitating direct communications, daily async progress logs, and swift QA cycles.' },
+  ];
+
+  const dnaItems = [
+    { n: '01', t: t('home.why.dna1.title'), d: t('home.why.dna1.desc') },
+    { n: '02', t: t('home.why.dna2.title'), d: t('home.why.dna2.desc') },
+    { n: '03', t: t('home.why.dna3.title'), d: t('home.why.dna3.desc') },
+    { n: '04', t: t('home.why.dna4.title'), d: t('home.why.dna4.desc') },
   ];
 
   return (
@@ -213,39 +213,33 @@ export default function Home() {
       >
         <HeroCanvas />
 
-        {/* Dynamic Interactive Spotlight Glow */}
         <div
           style={{
-            position: 'absolute',
-            inset: 0,
+            position: 'absolute', inset: 0,
             background: `radial-gradient(700px circle at ${mousePos.x}px ${mousePos.y}px, rgba(230, 58, 15, 0.075), transparent 80%)`,
-            pointerEvents: 'none',
-            zIndex: 0,
-            transition: 'background 0.15s ease',
+            pointerEvents: 'none', zIndex: 0, transition: 'background 0.15s ease',
           }}
         />
-
-        {/* Subtle grid background */}
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)', backgroundSize: '80px 80px', opacity: 0.4, pointerEvents: 'none' }} />
 
         <div className="container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 'clamp(100px, 18vh, 160px)', paddingBottom: 'clamp(60px, 10vh, 100px)', position: 'relative', zIndex: 1 }}>
-          <p className="eyebrow reveal" style={{ marginBottom: 28 }}>Strategy, Design & Development Studio</p>
+          <p className="eyebrow reveal" style={{ marginBottom: 28 }}>{t('home.hero.eyebrow')}</p>
 
           <h1 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(4.5rem, 10vw, 9rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.035em', lineHeight: 1.0, color: 'var(--text)', marginBottom: 32, maxWidth: 900 }}>
-            Creative studio<br />
-            built for <TypewriterWord words={['Strategy', 'Development', 'Design', 'Growth']} />
+            {t('home.hero.title')}{' '}
+            <TypewriterWord words={['Strategy', 'Development', 'Design', 'Estrategia', 'Desarrollo', 'Diseño', 'Stratégie', 'Développement', 'Conception', 'Strategie', 'Entwicklung', 'Sviluppo', 'Progettazione', '戦略', '開発', 'デザイン']} />
           </h1>
 
           <p className="reveal reveal-delay-2" style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: 520, marginBottom: 48 }}>
-            Strategy, design and development. From brand identities to full-scale platforms — we build what companies need to lead.
+            {t('home.hero.desc')}
           </p>
 
           <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'center' }}>
             <Link href="/portfolio" className="btn btn-primary" data-cursor="hover" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-              See our work <ArrowUpRight size={15} />
+              {t('home.hero.cta.work')} <ArrowUpRight size={15} />
             </Link>
             <Link href="/contact" className="btn btn-outline" data-cursor="hover">
-              Start a project
+              {t('home.hero.cta.project')}
             </Link>
           </div>
         </div>
@@ -254,7 +248,7 @@ export default function Home() {
         <div className="container" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', paddingBottom: 32, position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-3)', fontSize: '0.8rem' }}>
             <ChevronDown size={14} />
-            <span>Scroll to explore</span>
+            <span>{t('home.meta.scroll')}</span>
           </div>
         </div>
       </section>
@@ -273,10 +267,9 @@ export default function Home() {
       {/* -- WHAT WE DO ----------------------------------------- */}
       <section className="section">
         <div className="container">
-          {/* Header row */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, marginBottom: 80, alignItems: 'end' }} className="what-we-do-header">
             <div>
-              <p className="eyebrow reveal" style={{ marginBottom: 20 }}>What we do</p>
+              <p className="eyebrow reveal" style={{ marginBottom: 20 }}>{t('home.services.eyebrow')}</p>
               <h2 className="reveal reveal-delay-1" style={{ maxWidth: 560, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
                 <SplitText text="Aligning product aesthetics with robust code." />
               </h2>
@@ -286,18 +279,12 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Services List — vividmotion numbered rows */}
           <div style={{ borderTop: '1px solid var(--border)' }}>
             {services.map((s, i) => (
               <div
                 key={s.num}
                 className="reveal services-row"
-                style={{
-                  paddingBlock: 28,
-                  borderBottom: '1px solid var(--border)',
-                  transition: 'background 0.25s',
-                  cursor: 'default',
-                }}
+                style={{ paddingBlock: 28, borderBottom: '1px solid var(--border)', transition: 'background 0.25s', cursor: 'default' }}
                 onMouseEnter={e => (e.currentTarget.style.background = 'var(--surface)')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
               >
@@ -314,7 +301,7 @@ export default function Home() {
 
           <div style={{ marginTop: 40 }}>
             <Link href="/services" className="btn btn-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: '0.85rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600 }}>
-              Explore all services <ArrowUpRight size={15} />
+              {t('home.services.cta')} <ArrowUpRight size={15} />
             </Link>
           </div>
         </div>
@@ -325,18 +312,13 @@ export default function Home() {
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 64 }} className="why-grid">
             <div>
-              <p className="eyebrow reveal" style={{ marginBottom: 20 }}>Our DNA</p>
+              <p className="eyebrow reveal" style={{ marginBottom: 20 }}>{t('home.why.eyebrow')}</p>
               <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
-                <SplitText text="Why leading brands choose Codnexa" />
+                <SplitText text={t('home.why.title')} />
               </h2>
             </div>
             <div className="grid-dna" style={{ background: 'var(--border)', border: '1px solid var(--border)' }}>
-              {[
-                { n: '01', t: 'Direct Developer Loop', d: 'No account managers. You speak directly with the engineers building your product.' },
-                { n: '02', t: 'Business-Oriented Engineering', d: 'Code is a mechanism to drive metrics and revenue. We architect to scale alongside growth.' },
-                { n: '03', t: 'Meticulous Transparency', d: 'Full visibility over repos, staging pipelines, and sprints. Day by day accountability.' },
-                { n: '04', t: 'Rapid Iteration', d: 'Weekly sprint cycles with clear deliverables, feedback loops, and production deploys.' },
-              ].map((v, i) => (
+              {dnaItems.map((v, i) => (
                 <SpotlightCard key={v.n} num={v.n} title={v.t} desc={v.d} delay={i * 0.08} />
               ))}
             </div>
@@ -349,13 +331,13 @@ export default function Home() {
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, flexWrap: 'wrap', gap: 20 }}>
             <div>
-              <p className="eyebrow reveal" style={{ marginBottom: 16 }}>Selected Work</p>
+              <p className="eyebrow reveal" style={{ marginBottom: 16 }}>{t('home.work.eyebrow')}</p>
               <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
-                <SplitText text="Work we're proud of" />
+                <SplitText text={t('home.work.title')} />
               </h2>
             </div>
             <Link href="/portfolio" className="reveal btn btn-outline">
-              View all <ArrowUpRight size={14} />
+              {t('home.work.cta')} <ArrowUpRight size={14} />
             </Link>
           </div>
 
@@ -376,8 +358,10 @@ export default function Home() {
         <div className="container" style={{ maxWidth: 860 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 64, alignItems: 'start' }} className="faq-grid">
             <div className="sticky-column">
-              <p className="eyebrow reveal" style={{ marginBottom: 20 }}>FAQ</p>
-              <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05 }}>Common<br />Questions</h2>
+              <p className="eyebrow reveal" style={{ marginBottom: 20 }}>{t('home.faq.eyebrow')}</p>
+              <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05 }}>
+                {t('home.faq.title').split('\n').map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
+              </h2>
             </div>
 
             <div className="reveal" style={{ borderTop: '1px solid var(--border)' }}>
@@ -412,7 +396,6 @@ export default function Home() {
 
       {/* -- CTA BANNER ----------------------------------------- */}
       <section style={{ paddingBlock: 'clamp(80px, 14vw, 160px)', textAlign: 'center', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-        {/* Accent orb */}
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 600, height: 600, background: 'radial-gradient(circle, rgba(230,58,15,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
@@ -421,14 +404,14 @@ export default function Home() {
             Have a project in mind?
           </h2>
           <h2 className="reveal reveal-delay-2" style={{ color: 'var(--accent)', marginBottom: 48, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05 }}>
-            <em>Let&apos;s build it together.</em>
+            <em>{t('home.cta.title')}</em>
           </h2>
           <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link href="/contact" className="btn btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-              Book a Discovery Call <ArrowUpRight size={15} />
+              {t('home.cta.btn')} <ArrowUpRight size={15} />
             </Link>
             <Link href="/portfolio" className="btn btn-outline">
-              See our work
+              {t('home.work.cta')}
             </Link>
           </div>
         </div>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Cormorant_Garamond, Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { LanguageProvider } from '@/components/LanguageProvider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CustomCursor from '@/components/CustomCursor';
@@ -43,15 +44,17 @@ export default function RootLayout({
     <html lang="en" className={`${cormorantGaramond.variable} ${inter.variable}`}>
       <body className="noise" style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
         <ThemeProvider>
-          <Preloader />
-          <CustomCursor />
-          <Navbar />
-          <main style={{ flex: 1 }}>
-            <PageTransition>
-              {children}
-            </PageTransition>
-          </main>
-          <Footer />
+          <LanguageProvider>
+            <Preloader />
+            <CustomCursor />
+            <Navbar />
+            <main style={{ flex: 1 }}>
+              <PageTransition>
+                {children}
+              </PageTransition>
+            </main>
+            <Footer />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

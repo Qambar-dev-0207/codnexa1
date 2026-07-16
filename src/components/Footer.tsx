@@ -2,9 +2,11 @@
 
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
-
+import { useLanguage } from '@/components/LanguageProvider';
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer style={{ background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
       {/* Big CTA row */}
@@ -12,10 +14,12 @@ export default function Footer() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 32 }}>
           <div>
             <p style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600, marginBottom: 20 }}>
-              Start a Project
+              {t('footer.cta.eyebrow')}
             </p>
             <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.4rem, 6vw, 5rem)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1.05, color: 'var(--text)' }}>
-              Ready to build<br />something great?
+              {t('footer.cta.title').split('\n').map((line, i) => (
+                <span key={i}>{line}{i === 0 && <br />}</span>
+              ))}
             </h2>
           </div>
           <Link
@@ -31,7 +35,7 @@ export default function Footer() {
             onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'var(--text)'; (e.currentTarget as HTMLElement).style.color = 'var(--bg)'; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = 'var(--text)'; }}
           >
-            Get in touch <ArrowUpRight size={15} />
+            {t('footer.cta.btn')} <ArrowUpRight size={15} />
           </Link>
         </div>
       </div>
@@ -45,7 +49,7 @@ export default function Footer() {
             <span style={{ color: 'var(--accent)', fontSize: '1.4rem', fontWeight: 700, lineHeight: 1 }}>.</span>
           </Link>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-2)', lineHeight: 1.7, maxWidth: 260 }}>
-            Strategy, design, and development studio. We build what ambitious companies need to lead.
+            {t('footer.desc')}
           </p>
           <div style={{ marginTop: 24, display: 'flex', gap: 16 }}>
             {['LinkedIn', 'X', 'Instagram', 'Dribbble'].map(s => (
@@ -59,9 +63,14 @@ export default function Footer() {
 
         {/* Studio */}
         <div>
-          <h4 style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600, marginBottom: 20 }}>Studio</h4>
+          <h4 style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600, marginBottom: 20 }}>{t('footer.studio')}</h4>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {[['Services', '/services'], ['Work', '/portfolio'], ['About', '/about'], ['Contact', '/contact']].map(([n, h]) => (
+            {[
+              [t('nav.services'), '/services'],
+              [t('nav.work'),     '/portfolio'],
+              [t('nav.about'),    '/about'],
+              [t('nav.contact'),  '/contact'],
+            ].map(([n, h]) => (
               <li key={n}>
                 <Link href={h} style={{ fontSize: '0.9rem', color: 'var(--text-2)', textDecoration: 'none', transition: 'color 0.2s' }}
                   onMouseEnter={e => ((e.target as HTMLElement).style.color = 'var(--text)')}
@@ -74,9 +83,9 @@ export default function Footer() {
 
         {/* Legal */}
         <div>
-          <h4 style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600, marginBottom: 20 }}>Legal</h4>
+          <h4 style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600, marginBottom: 20 }}>{t('footer.legal')}</h4>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {['Privacy Policy', 'Terms of Use', 'Cookies'].map(n => (
+            {[t('footer.privacy'), t('footer.terms'), t('footer.cookies')].map(n => (
               <li key={n}>
                 <a href="#" style={{ fontSize: '0.9rem', color: 'var(--text-2)', textDecoration: 'none', transition: 'color 0.2s' }}
                   onMouseEnter={e => ((e.target as HTMLElement).style.color = 'var(--text)')}
@@ -89,7 +98,7 @@ export default function Footer() {
 
         {/* Contact */}
         <div>
-          <h4 style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600, marginBottom: 20 }}>Contact</h4>
+          <h4 style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600, marginBottom: 20 }}>{t('footer.contact')}</h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <a href="mailto:silverhanzala@gmail.com" style={{ fontSize: '0.9rem', color: 'var(--text-2)', textDecoration: 'none' }}>silverhanzala@gmail.com</a>
             <a href="tel:+916394623162" style={{ fontSize: '0.9rem', color: 'var(--text-2)', textDecoration: 'none' }}>+91 63946 23162</a>
@@ -100,7 +109,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="container" style={{ borderTop: '1px solid var(--border)', paddingBlock: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <span style={{ fontSize: '0.78rem', color: 'var(--text-3)' }}>
-          &copy; {new Date().getFullYear()} Codnexa Studio. All rights reserved.
+          &copy; {new Date().getFullYear()} Codnexa Studio. {t('footer.rights')}
         </span>
         <span style={{ fontSize: '0.72rem', letterSpacing: '0.06em', color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
           GMT+5:30

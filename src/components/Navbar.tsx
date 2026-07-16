@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sun, Moon, ArrowUpRight } from 'lucide-react';
+import { Sun, Moon, ArrowUpRight, Globe } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import { useLanguage, LANGUAGES } from './LanguageProvider';
 
 import { motion } from 'framer-motion';
 
@@ -13,6 +14,9 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen]   = useState(false);
   const pathname                  = usePathname();
   const { theme, toggleTheme }    = useTheme();
+  const [langOpen, setLangOpen]   = useState(false);
+  const { language, setLanguage }  = useLanguage();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -34,9 +38,9 @@ export default function Navbar() {
   };
 
   const links = [
-    { name: 'Services', href: '/services' },
-    { name: 'Work',     href: '/portfolio' },
-    { name: 'About',    href: '/about' },
+    { name: t('nav.services'), href: '/services' },
+    { name: t('nav.work'),     href: '/portfolio' },
+    { name: t('nav.about'),    href: '/about' },
   ];
 
   return (
@@ -132,6 +136,81 @@ export default function Navbar() {
             >
               {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
             </button>
+
+            {/* Language Selector */}
+            <div style={{ position: 'relative' }}>
+              <button
+                onClick={() => setLangOpen(!langOpen)}
+                aria-label="Select Language"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  background: 'transparent',
+                  border: '1px solid var(--border-mid)',
+                  borderRadius: 2,
+                  paddingInline: 10,
+                  height: 34,
+                  color: 'var(--text-2)',
+                  fontSize: '0.72rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'border-color 0.2s, color 0.2s',
+                }}
+              >
+                <Globe size={13} style={{ opacity: 0.7 }} />
+                <span>{language}</span>
+              </button>
+
+              {langOpen && (
+                <>
+                  <div style={{ position: 'fixed', inset: 0, zIndex: 99 }} onClick={() => setLangOpen(false)} />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      right: 0,
+                      marginTop: 8,
+                      background: 'var(--surface)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 2,
+                      padding: 6,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 4,
+                      minWidth: 120,
+                      zIndex: 100,
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+                    }}
+                  >
+                    {LANGUAGES.map(l => (
+                      <button
+                        key={l.code}
+                        onClick={() => {
+                          setLanguage(l.code as import('./LanguageProvider').LanguageCode);
+                          setLangOpen(false);
+                        }}
+                        style={{
+                          background: 'transparent',
+                          border: 'none',
+                          padding: '8px 12px',
+                          textAlign: 'left',
+                          fontSize: '0.78rem',
+                          color: language === l.code ? 'var(--accent)' : 'var(--text-2)',
+                          fontWeight: language === l.code ? 600 : 400,
+                          cursor: 'pointer',
+                          borderRadius: 2,
+                          width: '100%',
+                          transition: 'background 0.2s, color 0.2s',
+                        }}
+                      >
+                        {l.name}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
 
             <Link
               href="/contact"
@@ -232,10 +311,33 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div style={{ position: 'absolute', bottom: 40, left: 'var(--gutter)', right: 'var(--gutter)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-          <a href="mailto:silverhanzala@gmail.com" style={{ fontSize: '0.85rem', color: 'var(--text-2)' }}>
-            silverhanzala@gmail.com
-          </a>
+        <div style={{ position: 'absolute', bottom: 40, left: 'var(--gutter)', right: 'var(--gutter)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <a href="mailto:silverhanzala@gmail.com" style={{ fontSize: '0.85rem', color: 'var(--text-2)' }}>
+              silverhanzala@gmail.com
+            </a>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', maxWidth: 260 }}>
+              {LANGUAGES.map(l => (
+                <button
+                  key={l.code}
+                  onClick={() => setLanguage(l.code as import('./LanguageProvider').LanguageCode)}
+                  style={{
+                    background: 'transparent',
+                    border: language === l.code ? '1px solid var(--accent)' : '1px solid transparent',
+                    borderRadius: 2,
+                    fontSize: '0.65rem',
+                    fontWeight: language === l.code ? 700 : 400,
+                    color: language === l.code ? 'var(--accent)' : 'var(--text-3)',
+                    cursor: 'pointer',
+                    padding: '3px 7px',
+                    transition: 'color 0.2s, border-color 0.2s',
+                  }}
+                >
+                  {l.code}
+                </button>
+              ))}
+            </div>
+          </div>
           <div style={{ display: 'flex', gap: 20, fontSize: '0.8rem', color: 'var(--text-3)' }}>
             <a href="#" style={{ color: 'var(--text-3)' }}>LinkedIn</a>
             <a href="#" style={{ color: 'var(--text-3)' }}>X</a>
