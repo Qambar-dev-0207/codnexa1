@@ -16,13 +16,21 @@ export default function CustomCursor() {
     const preview = previewRef.current;
     if (!dot || !ring || !label || !preview) return;
 
-    if (window.matchMedia('(pointer: coarse)').matches) {
-      dot.style.display  = 'none';
-      ring.style.display = 'none';
-      return;
-    }
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+      if (isMobile) {
+        dot.style.display = 'none';
+        ring.style.display = 'none';
+        document.documentElement.style.cursor = 'auto';
+      } else {
+        dot.style.display = 'block';
+        ring.style.display = 'flex';
+        document.documentElement.style.cursor = 'none';
+      }
+    };
 
-    document.documentElement.style.cursor = 'none';
+    window.addEventListener('resize', handleResize);
+    handleResize();
 
     let mx = window.innerWidth / 2, my = window.innerHeight / 2;
     let dx = mx, dy = my;
@@ -175,6 +183,7 @@ export default function CustomCursor() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('resize', handleResize);
       observer.disconnect();
       document.documentElement.removeEventListener('mouseleave', onLeave);
       document.documentElement.removeEventListener('mouseenter', onEnter);

@@ -17,13 +17,6 @@ function useReveal() {
   }, []);
 }
 
-const STATS = [
-  { n: '50+',  l: 'Projects shipped' },
-  { n: '98%',  l: 'Client retention' },
-  { n: '100',  l: 'Lighthouse scores' },
-  { n: '8+',   l: 'Years experience'  },
-];
-
 export default function Portfolio() {
   useReveal();
 
@@ -45,16 +38,6 @@ export default function Portfolio() {
             <p className="reveal reveal-delay-2" style={{ maxWidth: 360, alignSelf: 'end', paddingBottom: 8 }}>
               We collaborate with ambitious startups and world-leading brands to engineer clean, performant, and high-converting systems.
             </p>
-          </div>
-
-          {/* Stats row */}
-          <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: 0, marginTop: 64, borderTop: '1px solid var(--border)' }}>
-            {STATS.map((s, i) => (
-              <div key={i} style={{ flex: 1, paddingBlock: 28, paddingInline: 24, borderRight: i < STATS.length - 1 ? '1px solid var(--border)' : 'none' }}>
-                <div style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 300, color: 'var(--text)', lineHeight: 1 }}>{s.n}</div>
-                <div style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', marginTop: 8 }}>{s.l}</div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -85,7 +68,7 @@ export default function Portfolio() {
       <section className="section">
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 64, alignItems: 'start' }} className="testi-grid">
-            <div style={{ position: 'sticky', top: 120 }}>
+            <div className="sticky-column">
               <p className="eyebrow reveal" style={{ marginBottom: 20 }}>Endorsements</p>
               <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05 }}>
                 What clients<br />say about us

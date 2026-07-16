@@ -40,7 +40,7 @@ export default function About() {
       {/* -- INTRO SPLIT -------------------------------------- */}
       <section className="section">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }} className="intro-grid">
+          <div className="intro-grid">
             <div>
               <p style={{ fontSize: 'clamp(1.15rem, 2.2vw, 1.45rem)', lineHeight: 1.7, color: 'var(--text)', fontWeight: 300 }} className="reveal">
                 Codnexa is a boutique digital studio founded on the belief that great software is the intersection of strategy, design, and engineering — not a trade-off between them.
@@ -73,7 +73,7 @@ export default function About() {
           <h2 className="reveal reveal-delay-1" style={{ marginBottom: 64, maxWidth: 700, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
             The values that guide every decision
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
+          <div className="grid-dna" style={{ background: 'var(--border)', border: '1px solid var(--border)' }}>
             {pillars.map((p, i) => (
               <div key={p.n} className="reveal" style={{ background: 'var(--bg-alt)', padding: '40px 36px', transitionDelay: `${i * 0.08}s` }}>
                 <span style={{ fontSize: '0.65rem', letterSpacing: '0.12em', color: 'var(--text-3)', fontWeight: 600 }}>{p.n}</span>
@@ -91,7 +91,7 @@ export default function About() {
           <p className="eyebrow reveal" style={{ marginBottom: 20 }}>The Team</p>
           <h2 className="reveal reveal-delay-1" style={{ marginBottom: 64, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>Built by people<br />who care</h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
+          <div className="grid-dna" style={{ background: 'var(--border)', border: '1px solid var(--border)' }}>
             {[
               {
                 name: 'Uzair Jamal',
@@ -107,21 +107,17 @@ export default function About() {
               },
             ].map((m, i) => (
               <div key={m.name} className="reveal" style={{ background: 'var(--surface)', padding: '48px 40px', transitionDelay: `${i * 0.1}s` }}>
-                {/* Avatar placeholder */}
-                <div style={{ width: 64, height: 64, borderRadius: 2, background: 'var(--bg-alt)', border: '1px solid var(--border)', marginBottom: 28, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 300, color: 'var(--accent)' }}>{m.name[0]}</span>
+                <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 28, fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 300, color: 'var(--text-3)' }}>
+                  {m.name.split(' ').map(n => n[0]).join('')}
                 </div>
-                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 400, color: 'var(--text)', marginBottom: 4 }}>{m.name}</h3>
-                <p style={{ fontSize: '0.8rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600, marginBottom: 20 }}>{m.role}</p>
-                <p style={{ fontSize: '0.92rem', lineHeight: 1.7, marginBottom: 28 }}>{m.bio}</p>
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600, display: 'block', marginBottom: 6 }}>{m.role}</span>
+                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.65rem', fontWeight: 300, color: 'var(--text)', marginBottom: 20, letterSpacing: '-0.02em' }}>{m.name}</h3>
+                <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: 'var(--text-2)', marginBottom: 28 }}>{m.bio}</p>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {m.expertise.map(e => (
-                    <li key={e} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: '0.82rem', color: 'var(--text-2)' }}>
-                      <span style={{ width: 16, height: 1, background: 'var(--accent)', flexShrink: 0 }} />
-                      {e}
-                    </li>
+                    <span key={e} style={{ fontSize: '0.68rem', letterSpacing: '0.04em', color: 'var(--text-3)', border: '1px solid var(--border)', padding: '4px 12px', borderRadius: 2 }}>{e}</span>
                   ))}
-                </ul>
+                </div>
               </div>
             ))}
           </div>
@@ -130,12 +126,10 @@ export default function About() {
 
       {/* -- CTA ---------------------------------------------- */}
       <section style={{ paddingBlock: 'clamp(80px, 12vw, 140px)', borderBottom: '1px solid var(--border)' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 40 }}>
-          <div>
-            <p className="eyebrow reveal" style={{ marginBottom: 16 }}>Work With Us</p>
-            <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, maxWidth: 580 }}>
-              Let&apos;s build something remarkable together
-            </h2>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 40 }}>
+          <div style={{ maxWidth: 540 }}>
+            <h2 className="reveal" style={{ marginBottom: 16, fontSize: 'clamp(3rem, 6vw, 5rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1.05 }}>Let&apos;s build something exceptional.</h2>
+            <p className="reveal reveal-delay-1" style={{ fontSize: '1rem', color: 'var(--text-2)' }}>Have a project or partnership in mind? We&apos;d love to hear from you.</p>
           </div>
           <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <Link href="/contact" className="btn btn-primary">
@@ -151,7 +145,6 @@ export default function About() {
       <style>{`
         @media (max-width: 768px) {
           .intro-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-          [style*="grid-template-columns: repeat(2, 1fr)"] { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>

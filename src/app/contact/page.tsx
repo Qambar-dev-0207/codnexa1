@@ -63,7 +63,7 @@ export default function Contact() {
       {/* ── CONTACT GRID ───────────────────────────────────── */}
       <section className="section" style={{ background: 'var(--bg-alt)' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: 64, alignItems: 'start' }} className="contact-grid">
+          <div className="contact-grid">
             
             {/* Info Column */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 48 }} className="reveal">
@@ -154,7 +154,7 @@ export default function Contact() {
                   <div>
                     {!formSubmitted ? (
                       <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }} className="form-row">
+                        <div className="form-row">
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             <label htmlFor="name" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Your Name</label>
                             <input type="text" id="name" required placeholder="Jane Doe" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
@@ -266,8 +266,7 @@ export default function Contact() {
                           </div>
                         </div>
 
-                        {/* Details */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="form-row">
+                        <div className="form-row" style={{ gap: 16 }}>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             <label htmlFor="book-name" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Your Name</label>
                             <input type="text" id="book-name" required placeholder="Jane Doe" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />

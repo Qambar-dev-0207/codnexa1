@@ -40,14 +40,13 @@ function ParallaxCard({ project, index }: { project: Project; index: number }) {
   return (
     <div
       ref={cardRef}
-      className="reveal"
+      className="reveal custom-cursor-none"
       style={{
         willChange: 'transform',
         transitionProperty: 'transform, opacity',
         transitionDuration: '0.5s, 0.9s',
         transitionTimingFunction: 'cubic-bezier(0.25,1,0.5,1), ease',
         transitionDelay: `${(index % 3) * 0.08}s`,
-        cursor: 'none',
       }}
       data-cursor="view"
       data-cursor-label="VIEW"

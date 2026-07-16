@@ -468,4 +468,20 @@ html:has(#cursor-dot) * { cursor: none !important; }
   }
 }
 
+@media (min-width: 768px) {
+  .custom-cursor-none {
+    cursor: none !important;
+  }
+}
+
+.sticky-column {
+  position: sticky;
+  top: 120px;
+}
+@media (max-width: 768px) {
+  .sticky-column {
+    position: static !important;
+  }
+}
+
 

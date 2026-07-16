@@ -144,7 +144,7 @@ export default function Services() {
       <section className="section" style={{ background: 'var(--bg-alt)' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 64, alignItems: 'start' }} className="process-grid">
-            <div style={{ position: 'sticky', top: 120 }}>
+            <div className="sticky-column">
               <p className="eyebrow reveal" style={{ marginBottom: 20 }}>Our Process</p>
               <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1.05 }}>How we<br />work</h2>
               <p className="reveal reveal-delay-2" style={{ marginTop: 20, fontSize: '0.9rem' }}>

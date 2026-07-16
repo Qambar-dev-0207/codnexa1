@@ -110,7 +110,7 @@ function TeaserCard({ tag, title, year, bg, img, delay }: { tag: string; title: 
 
   return (
     <motion.div
-      className="reveal"
+      className="reveal custom-cursor-none"
       style={{
         transformStyle: 'preserve-3d',
         rotateX: tiltX,
@@ -126,7 +126,6 @@ function TeaserCard({ tag, title, year, bg, img, delay }: { tag: string; title: 
         position: 'relative',
         overflow: 'hidden',
         borderRight: '1px solid var(--border)',
-        cursor: 'none',
       }}
       data-cursor="view"
       data-cursor-label="VIEW"
@@ -376,7 +375,7 @@ export default function Home() {
       <section className="section" style={{ background: 'var(--bg-alt)' }}>
         <div className="container" style={{ maxWidth: 860 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 64, alignItems: 'start' }} className="faq-grid">
-            <div style={{ position: 'sticky', top: 120 }}>
+            <div className="sticky-column">
               <p className="eyebrow reveal" style={{ marginBottom: 20 }}>FAQ</p>
               <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05 }}>Common<br />Questions</h2>
             </div>
