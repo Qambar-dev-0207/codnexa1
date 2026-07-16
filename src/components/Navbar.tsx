@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import { Sun, Moon, ArrowUpRight } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
+import { motion } from 'framer-motion';
+
 export default function Navbar() {
   const [scrolled, setScrolled]   = useState(false);
   const [menuOpen, setMenuOpen]   = useState(false);
@@ -72,25 +74,43 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Links */}
-          <div style={{ display: 'none', alignItems: 'center', gap: 36 }} className="desk-nav">
+          <div style={{ display: 'none', alignItems: 'center', gap: 16 }} className="desk-nav">
             {links.map((l) => (
               <Link
                 key={l.name}
                 href={l.href}
                 style={{
-                  fontSize: '0.85rem',
+                  fontSize: '0.82rem',
                   fontWeight: 500,
                   letterSpacing: '0.03em',
                   color: pathname === l.href ? 'var(--accent)' : 'var(--text-2)',
                   textDecoration: 'none',
                   transition: 'color 0.2s ease',
+                  padding: '8px 16px',
+                  position: 'relative',
+                  zIndex: 1,
                 }}
-                onMouseEnter={e => { (e.target as HTMLElement).style.color = 'var(--text)'; }}
-                onMouseLeave={e => { (e.target as HTMLElement).style.color = pathname === l.href ? 'var(--accent)' : 'var(--text-2)'; }}
+                className="nav-link"
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--text)'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = pathname === l.href ? 'var(--accent)' : 'var(--text-2)'; }}
               >
+                {pathname === l.href && (
+                  <motion.span
+                    layoutId="nav-active-pill"
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      backgroundColor: 'var(--bg-alt)',
+                      border: '1px solid var(--border)',
+                      zIndex: -1,
+                    }}
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
                 {l.name}
               </Link>
             ))}
+
 
             {/* Theme Toggle */}
             <button
@@ -213,8 +233,8 @@ export default function Navbar() {
         </div>
 
         <div style={{ position: 'absolute', bottom: 40, left: 'var(--gutter)', right: 'var(--gutter)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-          <a href="mailto:hello@codnexa.com" style={{ fontSize: '0.85rem', color: 'var(--text-2)' }}>
-            hello@codnexa.com
+          <a href="mailto:silverhanzala@gmail.com" style={{ fontSize: '0.85rem', color: 'var(--text-2)' }}>
+            silverhanzala@gmail.com
           </a>
           <div style={{ display: 'flex', gap: 20, fontSize: '0.8rem', color: 'var(--text-3)' }}>
             <a href="#" style={{ color: 'var(--text-3)' }}>LinkedIn</a>

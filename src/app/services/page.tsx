@@ -98,9 +98,9 @@ export default function Services() {
                 <div key={s.num} style={{ borderBottom: '1px solid var(--border)' }}>
                   <button
                     onClick={() => setOpen(isOpen ? null : i)}
+                    className="accordion-btn"
                     style={{
-                      width: '100%', display: 'grid', gridTemplateColumns: '64px 1fr auto',
-                      gap: 24, alignItems: 'center', paddingBlock: 32,
+                      width: '100%', paddingBlock: 32,
                       background: 'transparent', border: 'none', cursor: 'pointer',
                       textAlign: 'left', transition: 'background 0.2s',
                     }}
@@ -119,8 +119,8 @@ export default function Services() {
 
                   <div style={{ display: 'grid', gridTemplateRows: isOpen ? '1fr' : '0fr', transition: 'grid-template-rows 0.4s var(--ease)', overflow: 'hidden' }}>
                     <div style={{ minHeight: 0 }}>
-                      <div style={{ display: 'grid', gridTemplateColumns: '64px 1fr 1fr', gap: 24, paddingBottom: 40, paddingTop: 4 }}>
-                        <div />
+                      <div className="accordion-body-grid" style={{ gap: 24, paddingBottom: 40, paddingTop: 4 }}>
+                        <div className="accordion-spacer" style={{ display: 'block' }} />
                         <p style={{ fontSize: '0.95rem', lineHeight: 1.75, color: 'var(--text-2)' }}>{s.desc}</p>
                         <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
                           {s.deliverables.map(d => (
@@ -182,8 +182,7 @@ export default function Services() {
       <style>{`
         @media (max-width: 768px) {
           .process-grid { grid-template-columns: 1fr !important; }
-          [style*="grid-template-columns: 64px 1fr 1fr"] { grid-template-columns: 1fr !important; }
-          [style*="grid-template-columns: 64px 1fr auto"] { grid-template-columns: 1fr auto !important; }
+          .accordion-spacer { display: none !important; }
         }
       `}</style>
     </div>

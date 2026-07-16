@@ -38,7 +38,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [theme, mounted]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    const doc = document as any;
+    if (!doc.startViewTransition) {
+      setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+      return;
+    }
+    doc.startViewTransition(() => {
+      setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    });
   };
 
   // Avoid Hydration mismatch by returning dark state on server rendering

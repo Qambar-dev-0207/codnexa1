@@ -1,26 +1,27 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function CustomCursor() {
   const dotRef  = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
+  const [hoveredImgUrl, setHoveredImgUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const dot   = dotRef.current;
     const ring  = ringRef.current;
     const label = labelRef.current;
-    if (!dot || !ring || !label) return;
+    const preview = previewRef.current;
+    if (!dot || !ring || !label || !preview) return;
 
-    // Hide on touch devices
     if (window.matchMedia('(pointer: coarse)').matches) {
       dot.style.display  = 'none';
       ring.style.display = 'none';
       return;
     }
 
-    // Hide native cursor globally
     document.documentElement.style.cursor = 'none';
 
     let mx = window.innerWidth / 2, my = window.innerHeight / 2;
@@ -28,37 +29,61 @@ export default function CustomCursor() {
     let rx = mx, ry = my;
     let hovered = false;
     let labelText = '';
+    let snapTarget: HTMLElement | null = null;
     let raf: number;
 
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     const tick = () => {
-      // Dot follows immediately with small lag
-      dx = lerp(dx, mx, 0.55);
-      dy = lerp(dy, my, 0.55);
+      // Dot follows pointer immediately
+      dx = lerp(dx, mx, 0.45);
+      dy = lerp(dy, my, 0.45);
+      dot.style.transform = `translate3d(${dx}px, ${dy}px, 0) translate(-50%, -50%)`;
 
-      // Ring follows lazily
-      rx = lerp(rx, mx, 0.1);
-      ry = lerp(ry, my, 0.1);
+      if (snapTarget) {
+        const rect = snapTarget.getBoundingClientRect();
+        const tcx = rect.left + rect.width / 2;
+        const tcy = rect.top + rect.height / 2;
 
-      dot.style.transform  = `translate(${dx}px, ${dy}px) translate(-50%,-50%)`;
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+        // Snapping follow logic
+        rx = lerp(rx, tcx, 0.16);
+        ry = lerp(ry, tcy, 0.16);
+
+        ring.style.width = `${rect.width + 12}px`;
+        ring.style.height = `${rect.height + 12}px`;
+        ring.style.borderRadius = window.getComputedStyle(snapTarget).borderRadius || '4px';
+      } else {
+        // Standard mouse following
+        rx = lerp(rx, mx, 0.1);
+        ry = lerp(ry, my, 0.1);
+
+        ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+      }
+
+      if (snapTarget) {
+        ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+      }
 
       raf = requestAnimationFrame(tick);
     };
     tick();
 
-    const onMove = (e: MouseEvent) => { mx = e.clientX; my = e.clientY; };
+    const onMove = (e: MouseEvent) => {
+      mx = e.clientX;
+      my = e.clientY;
+    };
     window.addEventListener('mousemove', onMove, { passive: true });
 
-    // Cursor state: default | hover | view | drag
     const setState = (state: 'default' | 'hover' | 'view' | 'text') => {
       ring.dataset.state = state;
       label.dataset.state = state;
       switch (state) {
         case 'hover':
-          ring.style.width  = '56px';
-          ring.style.height = '56px';
+          if (!snapTarget) {
+            ring.style.width  = '56px';
+            ring.style.height = '56px';
+            ring.style.borderRadius = '50%';
+          }
           ring.style.borderColor = 'var(--accent)';
           ring.style.background  = 'rgba(230,58,15,0.04)';
           dot.style.background   = 'var(--accent)';
@@ -68,6 +93,7 @@ export default function CustomCursor() {
         case 'view':
           ring.style.width  = '90px';
           ring.style.height = '90px';
+          ring.style.borderRadius = '50%';
           ring.style.borderColor = 'rgba(240,240,240,0.6)';
           ring.style.background  = 'rgba(230,58,15,0.06)';
           dot.style.background   = 'transparent';
@@ -99,23 +125,32 @@ export default function CustomCursor() {
 
     setState('default');
 
-    // Bind hover intents to DOM elements
     const bind = () => {
-      document.querySelectorAll('a, button, [data-cursor]').forEach(el => {
+      document.querySelectorAll('a, button, [data-cursor], .nav-link').forEach(el => {
         const e = el as HTMLElement;
         if (e.dataset.cursorBound) return;
         e.dataset.cursorBound = '1';
 
         const cursorType = e.dataset.cursor || 'hover';
+        const doesSnap = e.dataset.cursorSnap === '1' || e.classList.contains('nav-link') || e.classList.contains('btn') || e.tagName === 'BUTTON';
+
         e.addEventListener('mouseenter', () => {
           hovered = true;
           labelText = e.dataset.cursorLabel || 'VIEW';
+          if (doesSnap) {
+            snapTarget = e;
+          }
+          if (e.dataset.cursorImg) {
+            setHoveredImgUrl(e.dataset.cursorImg);
+          }
           setState(cursorType as 'hover' | 'view' | 'text');
         });
+
         e.addEventListener('mouseleave', () => {
           hovered = false;
+          snapTarget = null;
+          setHoveredImgUrl(null);
           setState('default');
-          ring.style.borderRadius = '50%';
         });
       });
 
@@ -171,7 +206,7 @@ export default function CustomCursor() {
           pointerEvents: 'none',
           willChange: 'transform',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          transition: 'width 0.4s cubic-bezier(0.25,1,0.5,1), height 0.4s cubic-bezier(0.25,1,0.5,1), border-color 0.3s ease, background 0.3s ease, border-radius 0.3s ease, opacity 0.3s ease',
+          transition: 'width 0.35s cubic-bezier(0.25,1,0.5,1), height 0.35s cubic-bezier(0.25,1,0.5,1), border-color 0.3s ease, background 0.3s ease, border-radius 0.3s ease, opacity 0.3s ease',
         }}
       >
         {/* Label inside ring */}
@@ -184,6 +219,20 @@ export default function CustomCursor() {
             pointerEvents: 'none', userSelect: 'none',
           }}
         />
+
+        {/* Thumbnail Hover Image */}
+        <div
+          ref={previewRef}
+          style={{
+            position: 'absolute', top: '100%', left: '50%', transform: 'translate(-50%, 14px)',
+            width: 140, height: 90, border: '1px solid var(--border)', background: 'var(--bg-alt)',
+            opacity: hoveredImgUrl ? 1 : 0, transition: 'opacity 0.25s ease, transform 0.25s ease',
+            overflow: 'hidden', zIndex: 99997, pointerEvents: 'none',
+            borderRadius: '2px', boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
+          }}
+        >
+          {hoveredImgUrl && <img src={hoveredImgUrl} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+        </div>
       </div>
     </>
   );

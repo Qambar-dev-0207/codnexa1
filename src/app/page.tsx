@@ -3,8 +3,11 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { motion, useMotionValue, useSpring, useMotionTemplate } from 'framer-motion';
 import HeroCanvas from '@/components/HeroCanvas';
 import DecryptedText from '@/components/DecryptedText';
+import TypewriterWord from '@/components/TypewriterWord';
+import SplitText from '@/components/SplitText';
 
 /* ---------- Scroll Reveal Hook ---------- */
 function useReveal() {
@@ -40,6 +43,112 @@ function Counter({ to, suffix = '' }: { to: number; suffix?: string }) {
     return () => io.disconnect();
   }, [to]);
   return <span ref={ref}>{val}{suffix}</span>;
+}
+
+/* ---------- Spotlight Card (Our DNA) ---------- */
+function SpotlightCard({ num, title, desc, delay }: { num: string; title: string; desc: string; delay: number }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <motion.div
+      className="reveal"
+      style={{ transitionDelay: `${delay}s`, position: 'relative' }}
+      onMouseMove={handleMouseMove}
+    >
+      <motion.div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: useMotionTemplate`radial-gradient(220px circle at ${mouseX}px ${mouseY}px, rgba(230, 58, 15, 0.08), transparent 80%)`,
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      />
+      <div style={{
+        background: 'var(--bg-alt)',
+        border: '1px solid var(--border)',
+        padding: '36px 32px',
+        height: '100%',
+        position: 'relative',
+        zIndex: 1,
+      }}>
+        <span style={{ fontSize: '0.65rem', letterSpacing: '0.12em', color: 'var(--text-3)', fontWeight: 600 }}>{num}</span>
+        <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 400, color: 'var(--text)', marginTop: 16, marginBottom: 12, lineHeight: 1.3 }}>{title}</h3>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-2)', lineHeight: 1.65 }}>{desc}</p>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ---------- 3D Parallax Teaser Card (Selected Work) ---------- */
+function TeaserCard({ tag, title, year, bg, img, delay }: { tag: string; title: string; year: string; bg: string; img: string; delay: number }) {
+  const cardX = useMotionValue(0);
+  const cardY = useMotionValue(0);
+  const springConfig = { damping: 22, stiffness: 200 };
+  const tiltX = useSpring(cardY, springConfig);
+  const tiltY = useSpring(cardX, springConfig);
+
+  const handleMouseMove = ({ currentTarget, clientX, clientY }: React.MouseEvent) => {
+    const { left, top, width, height } = currentTarget.getBoundingClientRect();
+    const x = (clientX - left) / width - 0.5;
+    const y = (clientY - top) / height - 0.5;
+    cardX.set(x * 12);
+    cardY.set(-y * 12);
+  };
+
+  const handleMouseLeave = () => {
+    cardX.set(0);
+    cardY.set(0);
+  };
+
+  return (
+    <motion.div
+      className="reveal"
+      style={{
+        transformStyle: 'preserve-3d',
+        rotateX: tiltX,
+        rotateY: tiltY,
+        transitionDelay: `${delay}s`,
+        perspective: 1000,
+        background: bg,
+        padding: '56px 40px',
+        minHeight: 280,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        position: 'relative',
+        overflow: 'hidden',
+        borderRight: '1px solid var(--border)',
+        cursor: 'none',
+      }}
+      data-cursor="view"
+      data-cursor-label="VIEW"
+      data-cursor-img={img}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div style={{
+        position: 'absolute', inset: 0, opacity: 0.05,
+        backgroundImage: 'linear-gradient(var(--border-mid) 1px, transparent 1px), linear-gradient(90deg, var(--border-mid) 1px, transparent 1px)',
+        backgroundSize: '30px 30px',
+      }} />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 1 }}>
+        <span style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600 }}>{tag}</span>
+        <span style={{ fontSize: '0.7rem', color: 'var(--text-3)' }}>{year}</span>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', position: 'relative', zIndex: 1 }}>
+        <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.65rem', fontWeight: 300, color: '#f0f0f0', letterSpacing: '-0.02em', margin: 0 }}>{title}</h3>
+        <ArrowUpRight size={20} style={{ color: 'rgba(240,240,240,0.3)', flexShrink: 0 }} />
+      </div>
+    </motion.div>
+  );
 }
 
 /* ---------- Marquee ---------- */
@@ -91,7 +200,6 @@ export default function Home() {
 
   return (
     <div>
-
       {/* -- HERO ----------------------------------------------- */}
       <section
         ref={heroRef}
@@ -104,7 +212,6 @@ export default function Home() {
           overflow: 'hidden',
         }}
       >
-        {/* Particle Canvas Animation */}
         <HeroCanvas />
 
         {/* Dynamic Interactive Spotlight Glow */}
@@ -126,17 +233,16 @@ export default function Home() {
           <p className="eyebrow reveal" style={{ marginBottom: 28 }}>Strategy, Design & Development Studio</p>
 
           <h1 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(4.5rem, 10vw, 9rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.035em', lineHeight: 1.0, color: 'var(--text)', marginBottom: 32, maxWidth: 900 }}>
-            <DecryptedText text="Creative studio" />
-            <br />
-            built for <em style={{ color: 'var(--text)' }}><DecryptedText text="growth." delay={300} /></em>
+            Creative studio<br />
+            built for <TypewriterWord words={['Strategy', 'Development', 'Design', 'Growth']} />
           </h1>
 
           <p className="reveal reveal-delay-2" style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: 520, marginBottom: 48 }}>
             Strategy, design and development. From brand identities to full-scale platforms — we build what companies need to lead.
           </p>
 
-          <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/portfolio" className="btn btn-primary" data-cursor="hover">
+          <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'center' }}>
+            <Link href="/portfolio" className="btn btn-primary" data-cursor="hover" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
               See our work <ArrowUpRight size={15} />
             </Link>
             <Link href="/contact" className="btn btn-outline" data-cursor="hover">
@@ -146,17 +252,7 @@ export default function Home() {
         </div>
 
         {/* Bottom meta row */}
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', paddingBottom: 32, position: 'relative', zIndex: 1, flexWrap: 'wrap', gap: 16 }}>
-          <div style={{ display: 'flex', gap: 48 }}>
-            {[['50+', 'Projects Delivered'], ['8+', 'Years Experience'], ['98%', 'Client Retention']].map(([n, l]) => (
-              <div key={l}>
-                <div style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', fontWeight: 300, lineHeight: 1, color: 'var(--text)' }}>
-                  <Counter to={parseInt(n)} suffix={n.includes('+') ? '+' : n.includes('%') ? '%' : ''} />
-                </div>
-                <div style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', marginTop: 4 }}>{l}</div>
-              </div>
-            ))}
-          </div>
+        <div className="container" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', paddingBottom: 32, position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-3)', fontSize: '0.8rem' }}>
             <ChevronDown size={14} />
             <span>Scroll to explore</span>
@@ -164,29 +260,26 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* -- MARQUEE -------------------------------------------- */}
-      <div className="marquee-track" style={{ borderBottom: '1px solid var(--border)', paddingBlock: 18, background: 'var(--bg-alt)' }}>
+      <div className="marquee-track" style={{ borderBottom: '1px solid var(--border)', paddingBlock: 20, background: '#ffffff' }}>
         <div className="marquee-inner">
           {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-            <span key={i} style={{ fontSize: '0.8rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-3)', paddingInline: 24, whiteSpace: 'nowrap' }}>
+            <span key={i} style={{ fontSize: '0.82rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#000000', paddingInline: 24, whiteSpace: 'nowrap' }}>
               {item}
             </span>
           ))}
         </div>
       </div>
 
-
       {/* -- WHAT WE DO ----------------------------------------- */}
       <section className="section">
-
         <div className="container">
           {/* Header row */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, marginBottom: 80, alignItems: 'end' }} className="what-we-do-header">
             <div>
               <p className="eyebrow reveal" style={{ marginBottom: 20 }}>What we do</p>
               <h2 className="reveal reveal-delay-1" style={{ maxWidth: 560, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
-                <DecryptedText text="Aligning product aesthetics with robust code." />
+                <SplitText text="Aligning product aesthetics with robust code." />
               </h2>
             </div>
             <p className="reveal reveal-delay-2" style={{ alignSelf: 'end', maxWidth: 440 }}>
@@ -199,12 +292,8 @@ export default function Home() {
             {services.map((s, i) => (
               <div
                 key={s.num}
-                className="reveal"
+                className="reveal services-row"
                 style={{
-                  display: 'grid',
-                  gridTemplateColumns: '80px 1fr 1fr auto',
-                  gap: 24,
-                  alignItems: 'center',
                   paddingBlock: 28,
                   borderBottom: '1px solid var(--border)',
                   transition: 'background 0.25s',
@@ -239,21 +328,17 @@ export default function Home() {
             <div>
               <p className="eyebrow reveal" style={{ marginBottom: 20 }}>Our DNA</p>
               <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
-                <DecryptedText text="Why leading brands choose Codnexa" />
+                <SplitText text="Why leading brands choose Codnexa" />
               </h2>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
+            <div className="grid-dna" style={{ background: 'var(--border)', border: '1px solid var(--border)' }}>
               {[
                 { n: '01', t: 'Direct Developer Loop', d: 'No account managers. You speak directly with the engineers building your product.' },
                 { n: '02', t: 'Business-Oriented Engineering', d: 'Code is a mechanism to drive metrics and revenue. We architect to scale alongside growth.' },
                 { n: '03', t: 'Meticulous Transparency', d: 'Full visibility over repos, staging pipelines, and sprints. Day by day accountability.' },
                 { n: '04', t: 'Rapid Iteration', d: 'Weekly sprint cycles with clear deliverables, feedback loops, and production deploys.' },
               ].map((v, i) => (
-                <div key={v.n} className="reveal" style={{ background: 'var(--bg-alt)', padding: '36px 32px', position: 'relative', transitionDelay: `${i * 0.08}s` }}>
-                  <span style={{ fontSize: '0.65rem', letterSpacing: '0.12em', color: 'var(--text-3)', fontWeight: 600 }}>{v.n}</span>
-                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.15rem', fontWeight: 400, color: 'var(--text)', marginTop: 16, marginBottom: 12, lineHeight: 1.3 }}>{v.t}</h3>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-2)', lineHeight: 1.65 }}>{v.d}</p>
-                </div>
+                <SpotlightCard key={v.n} num={v.n} title={v.t} desc={v.d} delay={i * 0.08} />
               ))}
             </div>
           </div>
@@ -267,7 +352,7 @@ export default function Home() {
             <div>
               <p className="eyebrow reveal" style={{ marginBottom: 16 }}>Selected Work</p>
               <h2 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
-                <DecryptedText text="Work we're proud of" />
+                <SplitText text="Work we're proud of" />
               </h2>
             </div>
             <Link href="/portfolio" className="reveal btn btn-outline">
@@ -275,41 +360,13 @@ export default function Home() {
             </Link>
           </div>
 
-
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
             {[
-              { tag: 'SaaS Platform', title: 'Fintech Dashboard', year: '2024', bg: '#0f0f12' },
-              { tag: 'E-commerce',    title: 'Luxury Brand Store', year: '2024', bg: '#0c120f' },
-              { tag: 'Mobile App',   title: 'Health & Wellness App', year: '2023', bg: '#12100c' },
+              { tag: 'SaaS Platform', title: 'Fintech Dashboard', year: '2024', bg: '#0f0f12', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80' },
+              { tag: 'E-commerce',    title: 'Luxury Brand Store', year: '2024', bg: '#0c120f', img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&q=80' },
+              { tag: 'Mobile App',   title: 'Health & Wellness App', year: '2023', bg: '#12100c', img: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=400&q=80' },
             ].map((w, i) => (
-              <div
-                key={w.title}
-                className="reveal"
-                style={{
-                  background: w.bg,
-                  padding: '56px 40px',
-                  minHeight: 280,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  cursor: 'pointer',
-                  transitionDelay: `${i * 0.08}s`,
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'transform 0.3s var(--ease)',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.01)')}
-                onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <span style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600 }}>{w.tag}</span>
-                  <span style={{ fontSize: '0.7rem', color: 'var(--text-3)' }}>{w.year}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.6rem', fontWeight: 300, color: '#f0f0f0', letterSpacing: '-0.02em' }}>{w.title}</h3>
-                  <ArrowUpRight size={20} style={{ color: 'rgba(240,240,240,0.3)', flexShrink: 0 }} />
-                </div>
-              </div>
+              <TeaserCard key={w.title} tag={w.tag} title={w.title} year={w.year} bg={w.bg} img={w.img} delay={i * 0.08} />
             ))}
           </div>
         </div>
@@ -367,8 +424,8 @@ export default function Home() {
           <h2 className="reveal reveal-delay-2" style={{ color: 'var(--accent)', marginBottom: 48, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05 }}>
             <em>Let&apos;s build it together.</em>
           </h2>
-          <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/contact" className="btn btn-primary">
+          <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+            <Link href="/contact" className="btn btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
               Book a Discovery Call <ArrowUpRight size={15} />
             </Link>
             <Link href="/portfolio" className="btn btn-outline">
@@ -383,9 +440,6 @@ export default function Home() {
           .what-we-do-header { grid-template-columns: 1fr !important; }
           .why-grid { grid-template-columns: 1fr !important; }
           .faq-grid { grid-template-columns: 1fr !important; }
-          [style*="grid-template-columns: 80px 1fr 1fr auto"] {
-            grid-template-columns: 40px 1fr !important;
-          }
         }
       `}</style>
     </div>

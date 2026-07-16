@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CustomCursor from '@/components/CustomCursor';
 import Preloader from '@/components/Preloader';
+import PageTransition from '@/components/PageTransition';
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: '--font-heading',
@@ -46,7 +47,9 @@ export default function RootLayout({
           <CustomCursor />
           <Navbar />
           <main style={{ flex: 1 }}>
-            {children}
+            <PageTransition>
+              {children}
+            </PageTransition>
           </main>
           <Footer />
         </ThemeProvider>

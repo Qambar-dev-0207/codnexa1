@@ -91,8 +91,8 @@ export default function Footer() {
         <div>
           <h4 style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600, marginBottom: 20 }}>Contact</h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <a href="mailto:hello@codnexa.com" style={{ fontSize: '0.9rem', color: 'var(--text-2)', textDecoration: 'none' }}>hello@codnexa.com</a>
-            <a href="tel:+1234567890" style={{ fontSize: '0.9rem', color: 'var(--text-2)', textDecoration: 'none' }}>+1 (234) 567-890</a>
+            <a href="mailto:silverhanzala@gmail.com" style={{ fontSize: '0.9rem', color: 'var(--text-2)', textDecoration: 'none' }}>silverhanzala@gmail.com</a>
+            <a href="tel:+916394623162" style={{ fontSize: '0.9rem', color: 'var(--text-2)', textDecoration: 'none' }}>+91 63946 23162</a>
           </div>
         </div>
       </div>

@@ -1,27 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Preloader() {
   const [progress, setProgress] = useState(0);
-  const [activeText, setActiveText] = useState('INITIALIZING SYSTEMS');
   const [complete, setComplete] = useState(false);
   const [visible, setVisible] = useState(true);
 
-  const logs = [
-    { target: 15, text: 'LOADING CORE MODULES...' },
-    { target: 35, text: 'PARSING DESIGN TOKENS...' },
-    { target: 55, text: 'COMPILING GLOW MESHES...' },
-    { target: 75, text: 'ESTABLISHING HANDSHAKE...' },
-    { target: 95, text: 'ALL SYSTEMS NOMINAL.' },
-  ];
-
   useEffect(() => {
-    // Disable scrolling during load
+    // Disable scroll on boot
     document.body.style.overflow = 'hidden';
 
     const startTime = performance.now();
-    const duration = 1800; // 1.8 seconds loading
+    const duration = 1600; // 1.6s loading transition
 
     const update = (now: number) => {
       const elapsed = now - startTime;
@@ -30,98 +22,124 @@ export default function Preloader() {
       
       setProgress(currentProgress);
 
-      const match = logs.find(l => currentProgress <= l.target);
-      if (match) {
-        setActiveText(match.text);
-      } else {
-        setActiveText('BOOT COMPLETE.');
-      }
-
       if (pct < 1) {
         requestAnimationFrame(update);
       } else {
         setComplete(true);
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setVisible(false);
           document.body.style.overflow = '';
-        }, 800); 
+        }, 900); // Allow exit curtain transition to finish
+        return () => clearTimeout(timer);
       }
     };
 
-    requestAnimationFrame(update);
+    const rafId = requestAnimationFrame(update);
 
     return () => {
+      cancelAnimationFrame(rafId);
       document.body.style.overflow = '';
     };
   }, []);
 
   if (!visible) return null;
 
+  const characters = ['C', 'o', 'd', 'n', 'e', 'x', 'a'];
+
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+    exit: {
+      y: -60,
+      opacity: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.76, 0, 0.24, 1] as const,
+      },
+    },
+  };
+
+  const charVariants = {
+    hidden: { y: 24, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.8, ease: [0.215, 0.61, 0.355, 1] as const },
+    },
+  };
+
   return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundColor: '#050505',
-        zIndex: 999999,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        paddingInline: 'var(--gutter)',
-        fontFamily: "var(--font-sans), monospace",
-        color: '#f0f0f0',
-        transition: 'transform 0.85s cubic-bezier(0.85, 0, 0.15, 1)',
-        transform: complete ? 'translateY(-100%)' : 'translateY(0)',
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '520px',
-          margin: '0 auto',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 20,
-        }}
-      >
-        {/* Brand System */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px solid #1a1a1a', paddingBottom: 16 }}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
-            <span style={{ fontSize: '1.25rem', fontFamily: 'var(--font-serif)', letterSpacing: '-0.02em', fontWeight: 300 }}>Codnexa</span>
-            <span style={{ color: 'var(--accent)', fontSize: '1.25rem', fontWeight: 700 }}>.</span>
-          </div>
-          <span style={{ fontSize: '0.68rem', letterSpacing: '0.06em', color: '#555' }}>SYSTEM BOOT V4.2</span>
-        </div>
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ translateY: 0 }}
+          animate={{ translateY: complete ? '-100%' : '0%' }}
+          transition={{ duration: 0.9, ease: [0.85, 0, 0.15, 1] }}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: '#070707',
+            zIndex: 9999999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#ffffff',
+            pointerEvents: 'none',
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
+            {/* Logo character animation */}
+            <motion.h2
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              style={{
+                fontFamily: 'var(--font-serif)',
+                fontSize: 'clamp(2rem, 6vw, 3.8rem)',
+                fontWeight: 300,
+                letterSpacing: '-0.02em',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'baseline',
+              }}
+            >
+              {characters.map((char, index) => (
+                <motion.span key={index} variants={charVariants}>
+                  {char}
+                </motion.span>
+              ))}
+              <motion.span
+                variants={charVariants}
+                style={{ color: 'var(--accent)', fontWeight: 700 }}
+              >
+                .
+              </motion.span>
+            </motion.h2>
 
-        {/* Loading details */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', minHeight: 48 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <span style={{ fontSize: '0.62rem', color: '#555', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Status</span>
-            <span style={{ fontSize: '0.8rem', letterSpacing: '0.04em', fontFamily: 'monospace', color: 'var(--accent)' }}>{activeText}</span>
-          </div>
-          <div style={{ fontSize: '2.5rem', fontFamily: 'var(--font-serif)', fontWeight: 300, lineHeight: 1 }}>
-            {progress}%
-          </div>
-        </div>
+            {/* Elegant 1px progress track */}
+            <div style={{ width: 80, height: 1, backgroundColor: 'rgba(255,255,255,0.06)', position: 'relative', overflow: 'hidden' }}>
+              <motion.div
+                style={{
+                  height: '100%',
+                  width: `${progress}%`,
+                  backgroundColor: 'var(--accent)',
+                  transition: 'width 0.1s linear',
+                }}
+              />
+            </div>
 
-        {/* Progress bar */}
-        <div style={{ width: '100%', height: 1, background: '#181818', position: 'relative', overflow: 'hidden' }}>
-          <div
-            style={{
-              height: '100%',
-              width: `${progress}%`,
-              background: 'var(--accent)',
-              transition: 'width 0.05s linear',
-            }}
-          />
-        </div>
-
-        {/* Diagnostic logs */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.62rem', color: '#444', letterSpacing: '0.05em' }}>
-          <span>PORT: 3000 // LOC: localhost</span>
-          <span>SYSTEM READY</span>
-        </div>
-      </div>
-    </div>
+            {/* Tiny progress count */}
+            <span style={{ fontSize: '0.68rem', fontFamily: 'monospace', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.25)', marginTop: -4 }}>
+              {progress}%
+            </span>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

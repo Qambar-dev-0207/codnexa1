@@ -42,9 +42,11 @@ function ParallaxCard({ project, index }: { project: Project; index: number }) {
       ref={cardRef}
       className="reveal"
       style={{
-        transitionDelay: `${(index % 3) * 0.08}s`,
         willChange: 'transform',
-        transition: 'transform 0.5s cubic-bezier(0.25,1,0.5,1), opacity 0.9s ease',
+        transitionProperty: 'transform, opacity',
+        transitionDuration: '0.5s, 0.9s',
+        transitionTimingFunction: 'cubic-bezier(0.25,1,0.5,1), ease',
+        transitionDelay: `${(index % 3) * 0.08}s`,
         cursor: 'none',
       }}
       data-cursor="view"
@@ -141,6 +143,8 @@ const CATS = [
   { label: 'Enterprise', value: 'enterprise' },
 ] as const;
 
+import { motion } from 'framer-motion';
+
 export default function PortfolioGrid() {
   useReveal();
   const [active, setActive] = useState<'all' | 'web' | 'mobile' | 'ai' | 'enterprise'>('all');
@@ -156,19 +160,33 @@ export default function PortfolioGrid() {
             onClick={() => setActive(c.value)}
             style={{
               padding: '10px 20px', background: 'transparent', border: 'none',
-              borderBottom: active === c.value ? '2px solid var(--accent)' : '2px solid transparent',
               color: active === c.value ? 'var(--text)' : 'var(--text-3)',
               fontSize: '0.8rem', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase',
-              cursor: 'pointer', transition: 'color 0.2s, border-color 0.2s', whiteSpace: 'nowrap',
-              marginBottom: -1,
+              cursor: 'pointer', transition: 'color 0.2s', whiteSpace: 'nowrap',
+              position: 'relative',
             }}
             onMouseEnter={e => { if (active !== c.value) (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-2)'; }}
             onMouseLeave={e => { if (active !== c.value) (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-3)'; }}
           >
             {c.label}
+            {active === c.value && (
+              <motion.span
+                layoutId="portfolio-active-underline"
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: '2px',
+                  background: 'var(--accent)',
+                }}
+                transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+              />
+            )}
           </button>
         ))}
       </div>
+
 
       {/* Grid */}
       <div style={{

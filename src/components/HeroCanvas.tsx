@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTheme } from './ThemeProvider';
 
 export default function HeroCanvas() {
@@ -18,15 +18,32 @@ export default function HeroCanvas() {
     let height = (canvas.height = window.innerHeight);
 
     const particles: Particle[] = [];
-    const maxParticles = window.innerWidth < 768 ? 35 : 90;
+    const maxParticles = window.innerWidth < 768 ? 40 : 100;
     const maxDistance = 110;
+
+    // Track mouse coordinate globally relative to canvas
+    let mx = -9999;
+    let my = -9999;
 
     const handleResize = () => {
       width = (canvas.width = window.innerWidth);
       height = (canvas.height = window.innerHeight);
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mx = e.clientX - rect.left;
+      my = e.clientY - rect.top;
+    };
+
+    const handleMouseLeave = () => {
+      mx = -9999;
+      my = -9999;
+    };
+
     window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mouseleave', handleMouseLeave);
 
     class Particle {
       x: number;
@@ -39,16 +56,48 @@ export default function HeroCanvas() {
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.22;
-        this.vy = (Math.random() - 0.5) * 0.22;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
         this.radius = Math.random() * 2 + 1;
         this.colorType = Math.random() > 0.85 ? 'orange' : 'grey';
       }
 
       update() {
+        // Apply friction
+        this.vx *= 0.98;
+        this.vy *= 0.98;
+
+        // Base drifting force
+        this.vx += (Math.random() - 0.5) * 0.02;
+        this.vy += (Math.random() - 0.5) * 0.02;
+
+        // Mouse attraction warp
+        if (mx > -9000 && my > -9000) {
+          const dx = mx - this.x;
+          const dy = my - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const attractionRadius = 180;
+
+          if (dist < attractionRadius) {
+            const force = (attractionRadius - dist) / attractionRadius;
+            // Pull nodes towards the pointer
+            this.vx += (dx / dist) * force * 0.06;
+            this.vy += (dy / dist) * force * 0.06;
+          }
+        }
+
+        // Clamp speed
+        const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+        const maxSpeed = 1.0;
+        if (speed > maxSpeed) {
+          this.vx = (this.vx / speed) * maxSpeed;
+          this.vy = (this.vy / speed) * maxSpeed;
+        }
+
         this.x += this.vx;
         this.y += this.vy;
 
+        // Bounce off walls
         if (this.x < 0 || this.x > width) this.vx = -this.vx;
         if (this.y < 0 || this.y > height) this.vy = -this.vy;
       }
@@ -58,17 +107,14 @@ export default function HeroCanvas() {
         ctx!.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         
         if (this.colorType === 'orange') {
-          // Orange is brighter in dark theme, slightly deeper in light theme
-          ctx!.fillStyle = canvasTheme === 'dark' ? 'rgba(230, 58, 15, 0.6)' : 'rgba(216, 43, 0, 0.55)';
+          ctx!.fillStyle = canvasTheme === 'dark' ? 'rgba(230, 58, 15, 0.65)' : 'rgba(216, 43, 0, 0.6)';
         } else {
-          // Grey particles
-          ctx!.fillStyle = canvasTheme === 'dark' ? 'rgba(142, 142, 147, 0.18)' : 'rgba(100, 100, 110, 0.12)';
+          ctx!.fillStyle = canvasTheme === 'dark' ? 'rgba(142, 142, 147, 0.22)' : 'rgba(100, 100, 110, 0.16)';
         }
         ctx!.fill();
       }
     }
 
-    // Populate particles
     for (let i = 0; i < maxParticles; i++) {
       particles.push(new Particle());
     }
@@ -83,7 +129,6 @@ export default function HeroCanvas() {
         p.draw(theme);
       });
 
-      // Draw connection lines
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const p1 = particles[i];
@@ -123,6 +168,8 @@ export default function HeroCanvas() {
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, [theme]);
