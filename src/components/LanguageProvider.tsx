@@ -48,6 +48,7 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     'home.hero.cta.work': 'See our work',
     'home.hero.cta.project': 'Start a project',
     'home.meta.scroll': 'Scroll to explore',
+    'home.hero.typewriter': 'Strategy,Development,Design,Innovation,Excellence',
 
     'home.services.eyebrow': 'What we do',
     'home.services.title': 'Selected areas of expertise',
@@ -76,10 +77,12 @@ const translations: Record<LanguageCode, Record<string, string>> = {
 
     // About
     'about.hero.eyebrow': 'About Codnexa',
-    'about.hero.title': 'A studio that ships\nexceptional work.',
-    'about.intro.p1': 'Codnexa is a boutique digital studio founded on the belief that great software is the intersection of strategy, design, and engineering — not a trade-off between them.',
-    'about.intro.p2': 'We are a small, senior team. No junior developers learning on your project. No account managers as a buffer. Just experienced engineers and designers who care deeply about the products they build.',
-    'about.intro.p3': 'Founded in 2016, we have partnered with startups, scaleups, and established enterprises across fintech, healthtech, e-commerce, and SaaS — always with the same commitment to craft.',
+    'about.hero.title': 'A technology-driven\ndigital solutions company.',
+    'about.intro.p1': 'Codnexa is a technology-driven digital solutions company dedicated to helping businesses grow in an increasingly digital world. We combine creativity, innovation, and technology to build websites, web applications, and digital experiences that are visually appealing, user-friendly, and performance-focused.',
+    'about.intro.p2': 'Our expertise spans website development, custom web applications, UI/UX design, e-commerce development, search engine optimization (SEO), branding, digital marketing, social media marketing, Google Ads, Meta Ads, and AI-powered business solutions. Every solution is tailored to meet the unique goals of our clients while ensuring speed, security, scalability, and long-term growth.',
+    'about.intro.p3': "At Codnexa, we believe that every business deserves a strong online presence. Whether you're launching a startup, expanding a growing company, or modernizing an established brand, our team delivers digital solutions that help you reach more customers, improve conversions, and build lasting relationships.",
+    'about.intro.p4': 'We focus on creating responsive, SEO-friendly websites and data-driven marketing strategies that improve online visibility and generate measurable results. From strategy and design to development, launch, and ongoing support, we work closely with our clients to turn ideas into successful digital products.',
+    'about.intro.p5': "Our commitment to quality, transparency, and innovation makes Codnexa a trusted partner for businesses looking to accelerate their digital transformation. We don't just deliver projects—we create solutions that empower brands to grow, compete, and succeed in today's fast-changing digital landscape.",
     'about.stats.projects': 'Projects',
     'about.stats.years': 'Years',
     'about.stats.continents': 'Continents',
@@ -179,6 +182,7 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     'home.hero.cta.work': 'Ver nuestro trabajo',
     'home.hero.cta.project': 'Iniciar un proyecto',
     'home.meta.scroll': 'Desplazarse para explorar',
+    'home.hero.typewriter': 'Estrategia,Desarrollo,Diseño,Innovación,Excelencia',
 
     'home.services.eyebrow': 'Qué hacemos',
     'home.services.title': 'Áreas de especialización seleccionadas',
@@ -314,6 +318,7 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     'home.hero.cta.work': 'Voir nos projets',
     'home.hero.cta.project': 'Lancer un projet',
     'home.meta.scroll': 'Faire défiler pour explorer',
+    'home.hero.typewriter': 'Stratégie,Développement,Conception,Innovation,Excellence',
 
     'home.services.eyebrow': 'Notre expertise',
     'home.services.title': 'Domaines de compétences sélectionnés',
@@ -445,6 +450,7 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     'home.hero.cta.work': 'Unsere Arbeit sehen',
     'home.hero.cta.project': 'Projekt starten',
     'home.meta.scroll': 'Scrollen zum Erkunden',
+    'home.hero.typewriter': 'Strategie,Entwicklung,Design,Innovation,Exzellenz',
 
     'home.services.eyebrow': 'Unsere Expertise',
     'home.services.title': 'Ausgewählte Kompetenzbereiche',
@@ -576,6 +582,7 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     'home.hero.cta.work': 'Vedi i nostri lavori',
     'home.hero.cta.project': 'Avvia un progetto',
     'home.meta.scroll': 'Scorri per esplorare',
+    'home.hero.typewriter': 'Strategia,Sviluppo,Progettazione,Innovazione,Eccellenza',
 
     'home.services.eyebrow': 'Cosa Facciamo',
     'home.services.title': 'Aree selezionate di competenza',
@@ -707,6 +714,7 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     'home.hero.cta.work': 'Ver nosso trabalho',
     'home.hero.cta.project': 'Iniciar um projeto',
     'home.meta.scroll': 'Role para explorar',
+    'home.hero.typewriter': 'Estratégia,Desenvolvimento,Design,Inovação,Excelência',
 
     'home.services.eyebrow': 'O que fazemos',
     'home.services.title': 'Áreas de especialização selecionadas',
@@ -838,6 +846,7 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     'home.hero.cta.work': 'Наши проекты',
     'home.hero.cta.project': 'Начать проект',
     'home.meta.scroll': 'Прокрутите для изучения',
+    'home.hero.typewriter': 'Стратегия,Разработка,Дизайн,Инновации,Совершенство',
 
     'home.services.eyebrow': 'Наши услуги',
     'home.services.title': 'Выбранные области экспертизы',
@@ -969,6 +978,7 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     'home.hero.cta.work': 'हमारा काम देखें',
     'home.hero.cta.project': 'परियोजना शुरू करें',
     'home.meta.scroll': 'खोजने के लिए स्क्रॉल करें',
+    'home.hero.typewriter': 'रणनीति,विकास,डिज़ाइन,नवाचार,उत्कृष्टता',
 
     'home.services.eyebrow': 'हम क्या करते हैं',
     'home.services.title': 'विशेषज्ञता के चयनित क्षेत्र',
@@ -1100,6 +1110,7 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     'home.hero.cta.work': '浏览案例',
     'home.hero.cta.project': '开启项目',
     'home.meta.scroll': '向下滚动探索',
+    'home.hero.typewriter': '战略,开发,设计,创新,卓越',
 
     'home.services.eyebrow': '业务范围',
     'home.services.title': '精选核心技术领域',
@@ -1231,6 +1242,7 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     'home.hero.cta.work': '実績を見る',
     'home.hero.cta.project': 'プロジェクト相談',
     'home.meta.scroll': 'スクロールして探索',
+    'home.hero.typewriter': '戦略,開発,デザイン,革新,卓越',
 
     'home.services.eyebrow': '事業内容',
     'home.services.title': '厳選されたコア専門領域',

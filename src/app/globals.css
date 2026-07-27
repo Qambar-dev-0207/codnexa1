@@ -15,8 +15,9 @@
   --text:         #f0f0f0;
   --text-2:       #a0a0a0;
   --text-3:       #5a5a5a;
-  --accent:       #e63a0f;
-  --accent-hover: #ff5a2b;
+  --accent:       #1b929a;
+  --accent-hover: #21a5ad;
+  --accent-sec:   #165a8b;
 
   --font-sans:  var(--font-body,  'Inter', Arial, sans-serif);
   --font-serif: var(--font-heading, 'Cormorant Garamond', 'Times New Roman', serif);
@@ -33,16 +34,17 @@
 
 /* 2. LIGHT MODE */
 .light {
-  --bg:           #f4f1eb;
-  --bg-alt:       #ede9e1;
+  --bg:           #f6f9fa;
+  --bg-alt:       #ebf2f5;
   --surface:      #ffffff;
-  --border:       #ddd9d0;
-  --border-mid:   #c4bfb5;
-  --text:         #111111;
-  --text-2:       #555049;
-  --text-3:       #9e9890;
-  --accent:       #d62e00;
-  --accent-hover: #f04010;
+  --border:       #d8e4ea;
+  --border-mid:   #a8c3d1;
+  --text:         #0c2233;
+  --text-2:       #3a5568;
+  --text-3:       #6e889a;
+  --accent:       #1b929a;
+  --accent-hover: #14737a;
+  --accent-sec:   #165a8b;
 }
 
 /* 3. RESET */
@@ -90,7 +92,7 @@ em { font-style: italic; font-family: var(--font-serif); }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-::selection { background: rgba(230,58,15,0.25); color: var(--text); }
+::selection { background: rgba(27,146,154,0.3); color: var(--text); }
 
 /* 6. LAYOUT */
 .container {

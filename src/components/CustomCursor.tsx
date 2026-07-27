@@ -93,7 +93,7 @@ export default function CustomCursor() {
             ring.style.borderRadius = '50%';
           }
           ring.style.borderColor = 'var(--accent)';
-          ring.style.background  = 'rgba(230,58,15,0.04)';
+          ring.style.background  = 'rgba(27,146,154,0.08)';
           dot.style.background   = 'var(--accent)';
           dot.style.width = '6px'; dot.style.height = '6px';
           label.style.opacity = '0';
@@ -103,7 +103,7 @@ export default function CustomCursor() {
           ring.style.height = '90px';
           ring.style.borderRadius = '50%';
           ring.style.borderColor = 'rgba(240,240,240,0.6)';
-          ring.style.background  = 'rgba(230,58,15,0.06)';
+          ring.style.background  = 'rgba(27,146,154,0.12)';
           dot.style.background   = 'transparent';
           dot.style.width = '0px'; dot.style.height = '0px';
           label.style.opacity = '1';

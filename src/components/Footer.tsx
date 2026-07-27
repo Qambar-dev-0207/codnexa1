@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/components/LanguageProvider';
+import { useTheme } from '@/components/ThemeProvider';
 
 export default function Footer() {
   const { t } = useLanguage();
+  const { theme } = useTheme();
 
   return (
     <footer style={{ background: 'var(--bg)', borderTop: '1px solid var(--border)' }}>
@@ -44,9 +46,16 @@ export default function Footer() {
       <div className="container" style={{ paddingBlock: 64, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 40 }}>
         {/* Brand column */}
         <div style={{ gridColumn: 'span 2' }}>
-          <Link href="/" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'baseline', marginBottom: 16 }}>
-            <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 500, color: 'var(--text)', letterSpacing: '-0.02em' }}>Codnexa</span>
-            <span style={{ color: 'var(--accent)', fontSize: '1.4rem', fontWeight: 700, lineHeight: 1 }}>.</span>
+          <Link href="/" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
+            <img
+              src={theme === 'light' ? '/logo-icon.png' : '/logo-icon-dark.png'}
+              alt="Codnexa Logo"
+              style={{ height: 30, width: 'auto', display: 'block', objectFit: 'contain' }}
+            />
+            <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '1.3rem', letterSpacing: '0.04em', textTransform: 'uppercase', lineHeight: 1 }}>
+              <span style={{ color: '#165a8b' }}>COD</span>
+              <span style={{ color: '#1b929a' }}>NEXA</span>
+            </span>
           </Link>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-2)', lineHeight: 1.7, maxWidth: 260 }}>
             {t('footer.desc')}

@@ -47,13 +47,17 @@ export default function About() {
         <div className="container">
           <div className="intro-grid">
             <div>
-              <p style={{ fontSize: 'clamp(1.15rem, 2.2vw, 1.45rem)', lineHeight: 1.7, color: 'var(--text)', fontWeight: 300 }} className="reveal">
+              <p style={{ fontSize: 'clamp(1.15rem, 2.2vw, 1.45rem)', lineHeight: 1.7, color: 'var(--text)', fontWeight: 300, marginBottom: 24 }} className="reveal">
                 {t('about.intro.p1')}
+              </p>
+              <p style={{ fontSize: '1rem', lineHeight: 1.7, color: 'var(--text-2)', marginBottom: 24 }} className="reveal reveal-delay-1">
+                {t('about.intro.p2')}
               </p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <p className="reveal reveal-delay-1">{t('about.intro.p2')}</p>
-              <p className="reveal reveal-delay-2">{t('about.intro.p3')}</p>
+              <p className="reveal reveal-delay-1">{t('about.intro.p3')}</p>
+              <p className="reveal reveal-delay-2">{t('about.intro.p4')}</p>
+              <p className="reveal reveal-delay-3">{t('about.intro.p5')}</p>
               <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: 40, marginTop: 20 }}>
                 {[
                   ['50+', t('about.stats.projects')],
@@ -90,48 +94,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* -- FOUNDERS ----------------------------------------- */}
-      <section className="section">
-        <div className="container">
-          <p className="eyebrow reveal" style={{ marginBottom: 20 }}>{t('about.team.eyebrow')}</p>
-          <h2 className="reveal reveal-delay-1" style={{ marginBottom: 64, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
-            {t('about.team.title').split('\n').map((line, i) => (
-              <span key={i}>{line}{i === 0 && <br />}</span>
-            ))}
-          </h2>
 
-          <div className="grid-dna" style={{ background: 'var(--border)', border: '1px solid var(--border)' }}>
-            {[
-              {
-                name: 'Uzair Jamal',
-                role: t('about.team.founder1.role'),
-                bio: t('about.team.founder1.bio'),
-                expertise: ['System Architecture', 'Node.js / Python', 'Cloud Infrastructure', 'Technical Leadership'],
-              },
-              {
-                name: 'Munazza Batool',
-                role: t('about.team.founder2.role'),
-                bio: t('about.team.founder2.bio'),
-                expertise: ['Product Design', 'Design Systems', 'UX Research', 'Brand Identity'],
-              },
-            ].map((m, i) => (
-              <div key={m.name} className="reveal" style={{ background: 'var(--surface)', padding: '48px 40px', transitionDelay: `${i * 0.1}s` }}>
-                <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 28, fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 300, color: 'var(--text-3)' }}>
-                  {m.name.split(' ').map(n => n[0]).join('')}
-                </div>
-                <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600, display: 'block', marginBottom: 6 }}>{m.role}</span>
-                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.65rem', fontWeight: 300, color: 'var(--text)', marginBottom: 20, letterSpacing: '-0.02em' }}>{m.name}</h3>
-                <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: 'var(--text-2)', marginBottom: 28 }}>{m.bio}</p>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {m.expertise.map(e => (
-                    <span key={e} style={{ fontSize: '0.68rem', letterSpacing: '0.04em', color: 'var(--text-3)', border: '1px solid var(--border)', padding: '4px 12px', borderRadius: 2 }}>{e}</span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* -- CTA ---------------------------------------------- */}
       <section style={{ paddingBlock: 'clamp(80px, 12vw, 140px)', borderBottom: '1px solid var(--border)' }}>

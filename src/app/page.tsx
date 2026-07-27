@@ -119,8 +119,8 @@ function TeaserCard({ tag, title, year, bg, img, delay }: { tag: string; title: 
         transitionDelay: `${delay}s`,
         perspective: 1000,
         background: bg,
-        padding: '56px 40px',
-        minHeight: 280,
+        padding: '32px 32px 28px',
+        minHeight: 320,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -134,18 +134,34 @@ function TeaserCard({ tag, title, year, bg, img, delay }: { tag: string; title: 
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
+      {/* Background Image Preview */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `url(${img})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'top center',
+          opacity: 0.22,
+          filter: 'grayscale(20%) brightness(0.7)',
+          transition: 'opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease',
+          zIndex: 0,
+        }}
+        className="teaser-bg-img"
+      />
       <div style={{
-        position: 'absolute', inset: 0, opacity: 0.05,
-        backgroundImage: 'linear-gradient(var(--border-mid) 1px, transparent 1px), linear-gradient(90deg, var(--border-mid) 1px, transparent 1px)',
-        backgroundSize: '30px 30px',
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to top, rgba(10,10,12,0.95) 0%, rgba(10,10,12,0.4) 60%, rgba(10,10,12,0.7) 100%)',
+        zIndex: 1,
       }} />
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 1 }}>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 2 }}>
         <span style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600 }}>{tag}</span>
-        <span style={{ fontSize: '0.7rem', color: 'var(--text-3)' }}>{year}</span>
+        <span style={{ fontSize: '0.7rem', color: 'var(--text-3)', background: 'rgba(0,0,0,0.5)', padding: '2px 8px', borderRadius: 2 }}>{year}</span>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', position: 'relative', zIndex: 1 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', position: 'relative', zIndex: 2 }}>
         <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.65rem', fontWeight: 300, color: '#f0f0f0', letterSpacing: '-0.02em', margin: 0 }}>{title}</h3>
-        <ArrowUpRight size={20} style={{ color: 'rgba(240,240,240,0.3)', flexShrink: 0 }} />
+        <ArrowUpRight size={20} style={{ color: 'rgba(240,240,240,0.6)', flexShrink: 0 }} />
       </div>
     </motion.div>
   );
@@ -227,7 +243,7 @@ export default function Home() {
 
           <h1 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(4.5rem, 10vw, 9rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.035em', lineHeight: 1.0, color: 'var(--text)', marginBottom: 32, maxWidth: 900 }}>
             {t('home.hero.title')}{' '}
-            <TypewriterWord words={['Strategy', 'Development', 'Design', 'Estrategia', 'Desarrollo', 'Diseño', 'Stratégie', 'Développement', 'Conception', 'Strategie', 'Entwicklung', 'Sviluppo', 'Progettazione', '戦略', '開発', 'デザイン']} />
+            <TypewriterWord words={t('home.hero.typewriter').split(',')} />
           </h1>
 
           <p className="reveal reveal-delay-2" style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: 520, marginBottom: 48 }}>
@@ -343,9 +359,10 @@ export default function Home() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
             {[
-              { tag: 'SaaS Platform', title: 'Fintech Dashboard', year: '2024', bg: '#0f0f12', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80' },
-              { tag: 'E-commerce',    title: 'Luxury Brand Store', year: '2024', bg: '#0c120f', img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&q=80' },
-              { tag: 'Mobile App',   title: 'Health & Wellness App', year: '2023', bg: '#12100c', img: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=400&q=80' },
+              { tag: 'Web / Manufacturing', title: 'LGI Irrigation', year: '2024', bg: '#0f0f12', img: '/projects/lgi-irrigation.jpg' },
+              { tag: 'E-Commerce / Furniture', title: 'Skema International', year: '2024', bg: '#0c120f', img: '/projects/skema-furniture.jpg' },
+              { tag: 'Marketing & SEO', title: 'Search Growth Analytics', year: '2024', bg: '#12100c', img: '/projects/seo-analytics.jpg' },
+              { tag: 'E-Commerce / Fashion', title: 'Toki Kids Fashion', year: '2024', bg: '#0e1014', img: '/projects/toki-fashion.jpg' },
             ].map((w, i) => (
               <TeaserCard key={w.title} tag={w.tag} title={w.title} year={w.year} bg={w.bg} img={w.img} delay={i * 0.08} />
             ))}
@@ -396,7 +413,7 @@ export default function Home() {
 
       {/* -- CTA BANNER ----------------------------------------- */}
       <section style={{ paddingBlock: 'clamp(80px, 14vw, 160px)', textAlign: 'center', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 600, height: 600, background: 'radial-gradient(circle, rgba(230,58,15,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 600, height: 600, background: 'radial-gradient(circle, rgba(27,146,154,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <p className="eyebrow reveal" style={{ marginBottom: 24 }}>Let&apos;s Collaborate</p>

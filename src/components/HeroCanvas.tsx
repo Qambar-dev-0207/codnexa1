@@ -107,9 +107,9 @@ export default function HeroCanvas() {
         ctx!.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         
         if (this.colorType === 'orange') {
-          ctx!.fillStyle = canvasTheme === 'dark' ? 'rgba(230, 58, 15, 0.65)' : 'rgba(216, 43, 0, 0.6)';
+          ctx!.fillStyle = canvasTheme === 'dark' ? 'rgba(27, 146, 154, 0.75)' : 'rgba(27, 146, 154, 0.65)';
         } else {
-          ctx!.fillStyle = canvasTheme === 'dark' ? 'rgba(142, 142, 147, 0.22)' : 'rgba(100, 100, 110, 0.16)';
+          ctx!.fillStyle = canvasTheme === 'dark' ? 'rgba(22, 90, 139, 0.35)' : 'rgba(22, 90, 139, 0.25)';
         }
         ctx!.fill();
       }
@@ -143,16 +143,16 @@ export default function HeroCanvas() {
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
 
-            const alpha = (1 - dist / maxDistance) * 0.15;
+            const alpha = (1 - dist / maxDistance) * 0.2;
             
             if (p1.colorType === 'orange' || p2.colorType === 'orange') {
               ctx.strokeStyle = theme === 'dark' 
-                ? `rgba(230, 58, 15, ${alpha})` 
-                : `rgba(216, 43, 0, ${alpha})`;
+                ? `rgba(27, 146, 154, ${alpha})` 
+                : `rgba(27, 146, 154, ${alpha * 0.9})`;
             } else {
               ctx.strokeStyle = theme === 'dark' 
-                ? `rgba(142, 142, 147, ${alpha})` 
-                : `rgba(100, 100, 110, ${alpha * 0.8})`;
+                ? `rgba(22, 90, 139, ${alpha * 0.6})` 
+                : `rgba(22, 90, 139, ${alpha * 0.5})`;
             }
 
             ctx.lineWidth = 0.5;

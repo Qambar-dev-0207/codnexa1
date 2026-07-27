@@ -26,7 +26,7 @@ export default function Portfolio() {
     <div>
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section style={{ paddingTop: 'clamp(120px, 18vw, 200px)', paddingBottom: 'clamp(60px, 8vw, 100px)', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: -100, right: -100, width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(230,58,15,0.04) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: -100, right: -100, width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(27,146,154,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 48, alignItems: 'end' }} className="hero-grid">
@@ -91,7 +91,7 @@ export default function Portfolio() {
 
       {/* ── CTA ──────────────────────────────────────────────── */}
       <section style={{ paddingBlock: 'clamp(80px, 12vw, 140px)', position: 'relative', overflow: 'hidden', textAlign: 'center' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 60%, rgba(230,58,15,0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 60%, rgba(27,146,154,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <p className="eyebrow reveal" style={{ marginBottom: 20 }}>Next Project</p>
           <h2 className="reveal reveal-delay-1" style={{ marginBottom: 12, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05 }}>

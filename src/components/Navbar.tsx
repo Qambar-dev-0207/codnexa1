@@ -70,11 +70,16 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link href="/" onClick={closeMenu} style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'baseline', gap: 1 }}>
-            <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--text)' }}>
-              Codnexa
+          <Link href="/" onClick={closeMenu} style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+            <img
+              src={theme === 'light' ? '/logo-icon.png' : '/logo-icon-dark.png'}
+              alt="Codnexa Logo"
+              style={{ height: 28, width: 'auto', display: 'block', objectFit: 'contain' }}
+            />
+            <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '1.2rem', letterSpacing: '0.04em', textTransform: 'uppercase', lineHeight: 1 }}>
+              <span style={{ color: '#165a8b' }}>COD</span>
+              <span style={{ color: '#1b929a' }}>NEXA</span>
             </span>
-            <span style={{ color: 'var(--accent)', fontSize: '1.5rem', fontWeight: 700, lineHeight: 1 }}>.</span>
           </Link>
 
           {/* Desktop Links */}

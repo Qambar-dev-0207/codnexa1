@@ -1,32 +1,22 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { ExternalLink } from 'lucide-react';
-
-/* ── Scroll reveal ── */
-function useReveal() {
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      es => es.forEach(e => e.isIntersecting && e.target.classList.add('visible')),
-      { threshold: 0.08 }
-    );
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Project {
   id: number;
   num: string;
   title: string;
-  category: 'web' | 'mobile' | 'ai' | 'enterprise';
+  category: 'web' | 'ecommerce' | 'marketing' | 'ai';
   categoryLabel: string;
   desc: string;
   tags: string[];
   url: string;
+  img?: string;
 }
 
-/* ── Parallax image on hover ── */
+/* ── Parallax card with crystal-clear theme contrast ── */
 function ParallaxCard({ project, index }: { project: Project; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const imgRef  = useRef<HTMLDivElement>(null);
@@ -36,10 +26,10 @@ function ParallaxCard({ project, index }: { project: Project; index: number }) {
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current || !imgRef.current) return;
     const r = cardRef.current.getBoundingClientRect();
-    const x = ((e.clientX - r.left) / r.width  - 0.5) * 18;
-    const y = ((e.clientY - r.top)  / r.height - 0.5) * 12;
+    const x = ((e.clientX - r.left) / r.width  - 0.5) * 16;
+    const y = ((e.clientY - r.top)  / r.height - 0.5) * 10;
     imgRef.current.style.transform = `scale(1.06) translate(${x * 0.5}px, ${y * 0.5}px)`;
-    cardRef.current.style.transform = `perspective(900px) rotateX(${-y * 0.4}deg) rotateY(${x * 0.4}deg)`;
+    cardRef.current.style.transform = `perspective(900px) rotateX(${-y * 0.35}deg) rotateY(${x * 0.35}deg)`;
   };
 
   const onMouseLeave = () => {
@@ -48,33 +38,38 @@ function ParallaxCard({ project, index }: { project: Project; index: number }) {
     cardRef.current.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
   };
 
-  const bgColors = ['#0d0e14', '#0e130e', '#130e0e', '#0e0e16', '#131108', '#0e1313'];
-  const bg = bgColors[index % bgColors.length];
-  const thumbUrl = `https://image.thum.io/get/width/640/crop/360/noanimate/${project.url}`;
+  const thumbUrl = project.img || `https://image.thum.io/get/width/640/crop/360/noanimate/${project.url}`;
 
   return (
-    <div
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 24, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -16, scale: 0.96 }}
+      transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1], delay: index * 0.05 }}
       ref={cardRef}
-      className="reveal custom-cursor-none"
-      style={{
-        willChange: 'transform',
-        transitionProperty: 'transform, opacity',
-        transitionDuration: '0.5s, 0.9s',
-        transitionTimingFunction: 'cubic-bezier(0.25,1,0.5,1), ease',
-        transitionDelay: `${(index % 3) * 0.08}s`,
-      }}
+      className="custom-cursor-none"
+      style={{ willChange: 'transform' }}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
     >
       <a
-        href={project.url}
-        target="_blank"
+        href={project.url !== '#' ? project.url : undefined}
+        target={project.url !== '#' ? "_blank" : undefined}
         rel="noopener noreferrer"
         style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}
       >
-        <div style={{ background: bg, border: '1px solid var(--border)', overflow: 'hidden', position: 'relative' }}>
+        <div style={{
+          background: 'var(--surface)',
+          border: '1px solid var(--border)',
+          borderRadius: '4px',
+          overflow: 'hidden',
+          position: 'relative',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+          transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+        }}>
           {/* Image area */}
-          <div style={{ aspectRatio: '16/9', overflow: 'hidden', position: 'relative' }}>
+          <div style={{ aspectRatio: '16/9', overflow: 'hidden', position: 'relative', background: 'var(--bg-alt)' }}>
             <div
               ref={imgRef}
               style={{
@@ -86,15 +81,10 @@ function ParallaxCard({ project, index }: { project: Project; index: number }) {
               {(!imgLoaded || imgError) && (
                 <div style={{
                   position: 'absolute', inset: 0,
-                  background: `linear-gradient(135deg, ${bg}, var(--surface))`,
+                  background: 'linear-gradient(135deg, var(--bg-alt), var(--surface))',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
-                  <div style={{
-                    position: 'absolute', inset: 0, opacity: 0.12,
-                    backgroundImage: 'linear-gradient(var(--border-mid) 1px, transparent 1px), linear-gradient(90deg, var(--border-mid) 1px, transparent 1px)',
-                    backgroundSize: '40px 40px',
-                  }} />
-                  <span style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2rem, 4vw, 4rem)', fontWeight: 300, color: 'rgba(240,240,240,0.1)', letterSpacing: '-0.03em' }}>
+                  <span style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2rem, 4vw, 4rem)', fontWeight: 300, color: 'var(--text-3)', opacity: 0.3 }}>
                     {project.num}
                   </span>
                 </div>
@@ -109,7 +99,7 @@ function ParallaxCard({ project, index }: { project: Project; index: number }) {
                     width: '100%', height: '100%',
                     objectFit: 'cover',
                     opacity: imgLoaded ? 1 : 0,
-                    transition: 'opacity 0.6s ease',
+                    transition: 'opacity 0.5s ease',
                     display: 'block',
                     position: 'relative',
                     zIndex: 1,
@@ -117,109 +107,127 @@ function ParallaxCard({ project, index }: { project: Project; index: number }) {
                 />
               )}
             </div>
-            {/* Bottom gradient */}
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)', zIndex: 2 }} />
+            {/* Overlay gradient */}
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 60%)', zIndex: 2 }} />
             {/* Live badge */}
             <div style={{
               position: 'absolute', top: 14, right: 14, zIndex: 3,
-              background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(6px)',
-              border: '1px solid rgba(255,255,255,0.12)',
+              background: 'rgba(10, 20, 28, 0.75)', backdropFilter: 'blur(8px)',
+              border: '1px solid rgba(255,255,255,0.15)',
               borderRadius: 2, padding: '4px 10px',
-              display: 'flex', alignItems: 'center', gap: 5,
+              display: 'flex', alignItems: 'center', gap: 6,
             }}>
-              <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#4ade80', display: 'inline-block', boxShadow: '0 0 6px #4ade80' }} />
-              <span style={{ fontSize: '0.6rem', fontWeight: 700, color: 'rgba(255,255,255,0.8)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Live</span>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#1b929a', display: 'inline-block', boxShadow: '0 0 6px #1b929a' }} />
+              <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#ffffff', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Live</span>
             </div>
           </div>
 
-          {/* Card footer */}
-          <div style={{ padding: '20px 24px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          {/* Card footer with 100% crisp theme text contrast */}
+          <div style={{ padding: '20px 24px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', background: 'var(--surface)', borderTop: '1px solid var(--border)' }}>
             <div>
-              <span style={{ fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600, display: 'block', marginBottom: 8 }}>
+              <span style={{ fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 700, display: 'block', marginBottom: 6 }}>
                 {project.categoryLabel}
               </span>
-              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', fontWeight: 300, color: '#f0f0f0', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', fontWeight: 500, color: 'var(--text)', letterSpacing: '-0.015em', lineHeight: 1.2, margin: 0 }}>
                 {project.title}
               </h3>
             </div>
-            <ExternalLink size={18} style={{ color: 'rgba(240,240,240,0.4)', flexShrink: 0, marginLeft: 12 }} />
+            <ExternalLink size={18} style={{ color: 'var(--text-2)', flexShrink: 0, marginLeft: 12, opacity: 0.7 }} />
           </div>
         </div>
       </a>
 
-      {/* Description below card */}
+      {/* Description & tags below card */}
       <div style={{ paddingBlock: 16, borderBottom: '1px solid var(--border)' }}>
-        <p style={{ fontSize: '0.85rem', color: 'var(--text-2)', lineHeight: 1.65 }}>{project.desc}</p>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-2)', lineHeight: 1.65, margin: 0 }}>{project.desc}</p>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
           {project.tags.map(t => (
             <span key={t} style={{
               fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase',
-              color: 'var(--text-3)', border: '1px solid var(--border)', padding: '3px 10px', borderRadius: 1,
+              color: 'var(--text-3)', border: '1px solid var(--border)', padding: '3px 10px', borderRadius: 2,
+              background: 'var(--bg-alt)',
             }}>{t}</span>
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 const PROJECTS: Project[] = [
   {
     id: 1, num: '01', title: 'LGI Irrigation',
-    category: 'web', categoryLabel: 'Web / Agriculture',
-    desc: 'A modern irrigation solutions website with a clean product showcase, detailed service pages, and lead generation flows built for a growing agri-tech business.',
-    tags: ['Web Design', 'HTML/CSS', 'Netlify'],
+    category: 'web', categoryLabel: 'Web / Manufacturing',
+    desc: 'High-density polyethylene pipeline manufacturing, sewerage systems, and precision sprinkler network digital platform.',
+    tags: ['Web Design', 'Manufacturing', 'UI/UX'],
     url: 'https://lgirrigation.netlify.app',
+    img: '/projects/lgi-irrigation.jpg',
   },
   {
-    id: 2, num: '02', title: 'Byteonik AI Platform',
+    id: 2, num: '02', title: 'Skema International',
+    category: 'ecommerce', categoryLabel: 'E-commerce / Furniture',
+    desc: 'Exquisite wooden furniture manufacturer storefront and global export digital showcase for luxury living spaces.',
+    tags: ['E-Commerce', 'Branding', 'UI/UX'],
+    url: 'https://skemafurniture.in/',
+    img: '/projects/skema-furniture.jpg',
+  },
+  {
+    id: 3, num: '03', title: 'SEO & Growth Analytics',
+    category: 'marketing', categoryLabel: 'Marketing / Analytics',
+    desc: 'Data-driven Search Engine Optimization, Google Ads, and performance marketing driving exponential organic traffic & conversion growth.',
+    tags: ['SEO', 'Google Ads', 'Meta Ads', 'Analytics'],
+    url: '#',
+    img: '/projects/seo-analytics.jpg',
+  },
+  {
+    id: 4, num: '04', title: 'Qari Khajoor Centre',
+    category: 'ecommerce', categoryLabel: 'Branding & E-commerce',
+    desc: 'Organic dates, gourmet dry fruits brand identity, premium product packaging design, and modern web presence.',
+    tags: ['Branding', 'E-Commerce', 'Packaging'],
+    url: '#',
+    img: '/projects/qari-khajoor.jpg',
+  },
+  {
+    id: 5, num: '05', title: 'Toki Kids Fashion',
+    category: 'ecommerce', categoryLabel: 'E-commerce / Fashion',
+    desc: "Vibrant children's fashion e-commerce experience featuring interactive collection displays and streamlined online shopping.",
+    tags: ['E-Commerce', 'Web App', 'Fashion'],
+    url: '#',
+    img: '/projects/toki-fashion.jpg',
+  },
+  {
+    id: 6, num: '06', title: 'Byteonik AI Platform',
     category: 'ai', categoryLabel: 'AI / SaaS',
-    desc: 'A full-stack AI-powered platform by Byteonik Labs offering intelligent automation and data-driven insights for modern enterprises. Rich tooling, clean UX.',
+    desc: 'A full-stack AI-powered platform offering intelligent automation and data-driven insights for modern enterprises.',
     tags: ['AI/ML', 'SaaS', 'React', 'APIs'],
     url: 'https://ai.byteoniclabs.com/',
   },
   {
-    id: 3, num: '03', title: 'Skema Furniture',
-    category: 'web', categoryLabel: 'E-commerce / Furniture',
-    desc: 'Luxury furniture e-commerce storefront with immersive product photography, curated collections, and a seamless checkout experience for premium home décor.',
-    tags: ['E-commerce', 'UI/UX', 'Next.js', 'Shopify'],
-    url: 'https://skemafurniture.in/',
-  },
-  {
-    id: 4, num: '04', title: 'SpotDraft',
-    category: 'enterprise', categoryLabel: 'Enterprise / LegalTech',
-    desc: 'AI-powered contract lifecycle management platform trusted by global enterprises. Streamlines drafting, negotiation, and e-signature workflows at scale.',
-    tags: ['LegalTech', 'AI', 'Contract Management', 'SaaS'],
-    url: 'https://www.spotdraft.com/',
-  },
-  {
-    id: 5, num: '05', title: 'PlanMyVisas',
-    category: 'web', categoryLabel: 'Travel / VisaTech',
-    desc: 'An end-to-end visa planning and application platform that simplifies the complex world of international travel documentation for individuals and businesses.',
-    tags: ['Travel Tech', 'Web App', 'Automation', 'React'],
+    id: 7, num: '07', title: 'PlanMyVisas',
+    category: 'web', categoryLabel: 'Web App / VisaTech',
+    desc: 'End-to-end visa planning and travel documentation platform simplifying global mobility.',
+    tags: ['Travel Tech', 'Web App', 'Automation'],
     url: 'https://planmyvisas.com/',
   },
   {
-    id: 6, num: '06', title: 'EES My Travel Holidays',
-    category: 'web', categoryLabel: 'Travel / Tourism',
-    desc: 'A premium holiday booking and travel experience platform offering curated packages, destination guides, and seamless itinerary planning for global travellers.',
-    tags: ['Travel', 'Booking Platform', 'CMS', 'UI/UX'],
-    url: 'https://holidays.eesmytravel.com/',
+    id: 8, num: '08', title: 'SpotDraft Contract AI',
+    category: 'ai', categoryLabel: 'AI / Enterprise',
+    desc: 'AI-powered contract lifecycle management platform trusted by global enterprise teams.',
+    tags: ['AI', 'LegalTech', 'SaaS'],
+    url: 'https://www.spotdraft.com/',
   },
 ];
 
 const CATS = [
   { label: 'All',        value: 'all' },
   { label: 'Web',        value: 'web' },
-  { label: 'AI',         value: 'ai' },
-  { label: 'Enterprise', value: 'enterprise' },
+  { label: 'E-Commerce', value: 'ecommerce' },
+  { label: 'Marketing',  value: 'marketing' },
+  { label: 'AI & SaaS',  value: 'ai' },
 ] as const;
 
-import { motion } from 'framer-motion';
-
 export default function PortfolioGrid() {
-  useReveal();
-  const [active, setActive] = useState<'all' | 'web' | 'ai' | 'enterprise'>('all');
+  const [active, setActive] = useState<'all' | 'web' | 'ecommerce' | 'marketing' | 'ai'>('all');
   const filtered = active === 'all' ? PROJECTS : PROJECTS.filter(p => p.category === active);
 
   return (
@@ -231,9 +239,9 @@ export default function PortfolioGrid() {
             key={c.value}
             onClick={() => setActive(c.value)}
             style={{
-              padding: '10px 20px', background: 'transparent', border: 'none',
+              padding: '12px 24px', background: 'transparent', border: 'none',
               color: active === c.value ? 'var(--text)' : 'var(--text-3)',
-              fontSize: '0.8rem', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase',
+              fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase',
               cursor: 'pointer', transition: 'color 0.2s', whiteSpace: 'nowrap',
               position: 'relative',
             }}
@@ -252,14 +260,21 @@ export default function PortfolioGrid() {
         ))}
       </div>
 
-      {/* Grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))',
-        gap: 24,
-      }}>
-        {filtered.map((p, i) => <ParallaxCard key={p.id} project={p} index={i} />)}
-      </div>
+      {/* Animated Grid */}
+      <motion.div
+        layout
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))',
+          gap: 32,
+        }}
+      >
+        <AnimatePresence mode="popLayout">
+          {filtered.map((p, i) => (
+            <ParallaxCard key={p.id} project={p} index={i} />
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 }

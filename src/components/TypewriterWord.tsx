@@ -19,6 +19,13 @@ export default function TypewriterWord({
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // Reset when language changes (words array changes)
+  useEffect(() => {
+    setCurrentWordIndex(0);
+    setCurrentText('');
+    setIsDeleting(false);
+  }, [words.join(',')]);  // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     const word = words[currentWordIndex];
     let timer: NodeJS.Timeout;
