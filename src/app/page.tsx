@@ -134,7 +134,7 @@ function TeaserCard({ tag, title, year, bg, img, delay }: { tag: string; title: 
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Background Image Preview */}
+      {/* Background Image Preview — High Visibility */}
       <div
         style={{
           position: 'absolute',
@@ -142,26 +142,29 @@ function TeaserCard({ tag, title, year, bg, img, delay }: { tag: string; title: 
           backgroundImage: `url(${img})`,
           backgroundSize: 'cover',
           backgroundPosition: 'top center',
-          opacity: 0.22,
-          filter: 'grayscale(20%) brightness(0.7)',
-          transition: 'opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease',
+          opacity: 0.85,
+          filter: 'brightness(0.92) contrast(1.05)',
+          transition: 'opacity 0.4s ease, transform 0.5s ease, filter 0.4s ease',
           zIndex: 0,
         }}
         className="teaser-bg-img"
       />
+      {/* Subtle bottom gradient vignette for text legibility */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(to top, rgba(10,10,12,0.95) 0%, rgba(10,10,12,0.4) 60%, rgba(10,10,12,0.7) 100%)',
+        background: 'linear-gradient(to top, rgba(5,12,18,0.88) 0%, rgba(5,12,18,0.3) 50%, rgba(5,12,18,0.2) 100%)',
         zIndex: 1,
       }} />
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 2 }}>
-        <span style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600 }}>{tag}</span>
-        <span style={{ fontSize: '0.7rem', color: 'var(--text-3)', background: 'rgba(0,0,0,0.5)', padding: '2px 8px', borderRadius: 2 }}>{year}</span>
+        <span style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#1b929a', fontWeight: 700, background: 'rgba(5,15,22,0.75)', backdropFilter: 'blur(6px)', padding: '4px 10px', borderRadius: 2, border: '1px solid rgba(255,255,255,0.1)' }}>{tag}</span>
+        <span style={{ fontSize: '0.7rem', color: '#ffffff', background: 'rgba(5,15,22,0.75)', backdropFilter: 'blur(6px)', padding: '4px 10px', borderRadius: 2, border: '1px solid rgba(255,255,255,0.1)', fontWeight: 600 }}>{year}</span>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', position: 'relative', zIndex: 2 }}>
-        <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.65rem', fontWeight: 300, color: '#f0f0f0', letterSpacing: '-0.02em', margin: 0 }}>{title}</h3>
-        <ArrowUpRight size={20} style={{ color: 'rgba(240,240,240,0.6)', flexShrink: 0 }} />
+        <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.75rem', fontWeight: 500, color: '#ffffff', letterSpacing: '-0.02em', margin: 0, textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>{title}</h3>
+        <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(255,255,255,0.2)', flexShrink: 0 }}>
+          <ArrowUpRight size={18} style={{ color: '#ffffff' }} />
+        </div>
       </div>
     </motion.div>
   );

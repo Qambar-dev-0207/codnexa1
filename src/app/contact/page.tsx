@@ -104,6 +104,36 @@ export default function Contact() {
                     >+91 63946 23162</a>
                   </div>
                 </div>
+
+                {/* WhatsApp Button */}
+                <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                  <div style={{ width: 44, height: 44, border: '1px solid rgba(37, 211, 102, 0.4)', background: 'rgba(37, 211, 102, 0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, borderRadius: 2 }}>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#25D366" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
+                      <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', display: 'block', marginBottom: 6 }}>Instant Chat</span>
+                    <a
+                      href="https://wa.me/916394623162"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 8,
+                        fontFamily: 'var(--font-sans)', fontSize: '0.85rem', fontWeight: 600,
+                        letterSpacing: '0.04em', color: '#ffffff', background: '#25D366',
+                        padding: '10px 20px', borderRadius: 4, textDecoration: 'none',
+                        transition: 'background 0.2s, transform 0.2s, box-shadow 0.2s',
+                        boxShadow: '0 4px 14px rgba(37, 211, 102, 0.25)',
+                      }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#20ba5a'; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#25D366'; }}
+                    >
+                      Chat on WhatsApp (+91 63946 23162) <ArrowUpRight size={15} />
+                    </a>
+                  </div>
+                </div>
               </div>
 
               {/* Office coordinate */}
