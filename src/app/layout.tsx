@@ -41,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorantGaramond.variable} ${inter.variable}`}>
+    <html lang="en" className={`light ${cormorantGaramond.variable} ${inter.variable}`}>
       <body className="noise" style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
         <ThemeProvider>
           <LanguageProvider>
