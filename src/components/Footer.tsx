@@ -64,7 +64,7 @@ export default function Footer() {
             {[
               { name: 'LinkedIn', url: 'https://www.linkedin.com/company/codnexa/' },
               { name: 'X', url: '#' },
-              { name: 'Instagram', url: 'https://www.instagram.com/codnexa?igsh=ajM4ZzUxNm56c3R1' },
+              { name: 'Instagram', url: 'https://www.instagram.com/codnexa' },
             ].map(s => (
               <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.78rem', color: 'var(--text-3)', textDecoration: 'none', transition: 'color 0.2s' }}
                 onMouseEnter={e => ((e.target as HTMLElement).style.color = 'var(--text)')}

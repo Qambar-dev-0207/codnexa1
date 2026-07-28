@@ -346,7 +346,7 @@ export default function Navbar() {
           <div style={{ display: 'flex', gap: 20, fontSize: '0.8rem', color: 'var(--text-3)' }}>
             <a href="https://www.linkedin.com/company/codnexa/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-3)' }}>LinkedIn</a>
             <a href="#" style={{ color: 'var(--text-3)' }}>X</a>
-            <a href="https://www.instagram.com/codnexa?igsh=ajM4ZzUxNm56c3R1" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-3)' }}>Instagram</a>
+            <a href="https://www.instagram.com/codnexa" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-3)' }}>Instagram</a>
           </div>
         </div>
       </div>
