@@ -28,22 +28,25 @@ export default function Contact() {
   const [bookingSubmitting, setBookingSubmitting] = useState(false);
   const [bookingError, setBookingError] = useState<string | null>(null);
 
-  const WEB3FORMS_KEY = '5a5b51dd-cf8d-4e9a-9e1d-c40d7c0f1e8f'; // Web3Forms Access Key
-
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormSubmitting(true);
     setFormError(null);
 
     const formData = new FormData(e.currentTarget);
-    formData.append('access_key', WEB3FORMS_KEY);
-    formData.append('subject', 'New Project Brief Submission - Codnexa Studio');
-    formData.append('from_name', 'Codnexa Contact Form');
+    const payload = {
+      type: 'brief',
+      name: formData.get('name'),
+      email: formData.get('email'),
+      project_focus: formData.get('project_focus'),
+      details: formData.get('details'),
+    };
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -66,16 +69,19 @@ export default function Contact() {
     setBookingError(null);
 
     const formData = new FormData(e.currentTarget);
-    formData.append('access_key', WEB3FORMS_KEY);
-    formData.append('subject', 'New Call Booking Diagnostic - Codnexa Studio');
-    formData.append('from_name', 'Codnexa Booking System');
-    formData.append('Requested Date', bookingDate);
-    formData.append('Requested Time', bookingTime + ' (EST)');
+    const payload = {
+      type: 'booking',
+      name: formData.get('name'),
+      email: formData.get('email'),
+      bookingDate,
+      bookingTime,
+    };
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
