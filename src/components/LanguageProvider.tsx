@@ -126,6 +126,16 @@ const translations: Record<LanguageCode, Record<string, string>> = {
     'portfolio.testimonials.title': 'What clients\nsay about us',
     'portfolio.testimonials.desc': 'We measure success by the outcomes we drive for our clients, not just by shipping code.',
 
+    // Projects
+    'project.1.desc': 'High-density polyethylene pipeline manufacturing, sewerage systems, and precision sprinkler network digital platform.',
+    'project.2.desc': 'Exquisite wooden furniture manufacturer storefront and global export digital showcase for luxury living spaces.',
+    'project.3.desc': 'Data driven Search Engine Optimization, Google Ads, and performance marketing driving exponential organic traffic & conversion growth.',
+    'project.4.desc': 'Organic dates, gourmet dry fruits brand identity, premium product packaging design, and modern web presence.',
+    'project.5.desc': "Vibrant children's fashion e-commerce experience featuring interactive collection displays and streamlined online shopping.",
+    'project.6.desc': 'A full stack AI powered platform offering intelligent automation and data driven insights for modern enterprises.',
+    'project.7.desc': 'End to end visa planning and travel documentation platform simplifying global mobility.',
+    'project.8.desc': 'AI powered contract lifecycle management platform trusted by global enterprise teams.',
+
     // Contact
     'contact.hero.eyebrow': 'Contact Us',
     'contact.hero.title': 'Get in\ntouch',

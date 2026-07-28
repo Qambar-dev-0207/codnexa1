@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/components/LanguageProvider';
 
 interface Project {
   id: number;
@@ -18,6 +19,7 @@ interface Project {
 
 /* ── Parallax card with crystal-clear theme contrast ── */
 function ParallaxCard({ project, index }: { project: Project; index: number }) {
+  const { t } = useLanguage();
   const cardRef = useRef<HTMLDivElement>(null);
   const imgRef  = useRef<HTMLDivElement>(null);
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -139,14 +141,16 @@ function ParallaxCard({ project, index }: { project: Project; index: number }) {
 
       {/* Description & tags below card */}
       <div style={{ paddingBlock: 16, borderBottom: '1px solid var(--border)' }}>
-        <p style={{ fontSize: '0.88rem', color: 'var(--text-2)', lineHeight: 1.65, margin: 0 }}>{project.desc}</p>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-2)', lineHeight: 1.65, margin: 0 }}>
+          {t(`project.${project.id}.desc`)}
+        </p>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
-          {project.tags.map(t => (
-            <span key={t} style={{
+          {project.tags.map(tag => (
+            <span key={tag} style={{
               fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase',
               color: 'var(--text-3)', border: '1px solid var(--border)', padding: '3px 10px', borderRadius: 2,
               background: 'var(--bg-alt)',
-            }}>{t}</span>
+            }}>{tag}</span>
           ))}
         </div>
       </div>

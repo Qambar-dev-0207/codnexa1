@@ -196,10 +196,10 @@ export default function Home() {
   }, []);
 
   const services = [
-    { num: '01', label: 'Brand & Graphics',   title: 'Creative & UI Design',  desc: 'Interfaces that capture identity and establish functional patterns.' },
-    { num: '02', label: 'Interfaces',          title: 'Front-End Systems',     desc: 'Pixel-perfect React and Next.js platforms optimised for speed.' },
-    { num: '03', label: 'Code Stacks',         title: 'Full-Stack Scale',      desc: 'Secure backend databases, third-party integrations, and robust APIs.' },
-    { num: '04', label: 'Architecture',        title: 'Cloud Planning',        desc: 'Deploying secure and elastic AWS / Vercel pipelines for uptime.' },
+    { num: '01', label: t('nav.services'), title: t('about.principles.3.title'), desc: t('about.principles.3.desc') },
+    { num: '02', label: t('nav.work'), title: t('about.principles.2.title'), desc: t('about.principles.2.desc') },
+    { num: '03', label: t('nav.about'), title: t('about.principles.4.title'), desc: t('about.principles.4.desc') },
+    { num: '04', label: t('nav.contact'), title: t('about.principles.1.title'), desc: t('about.principles.1.desc') },
   ];
 
   const faqs = [
@@ -290,11 +290,11 @@ export default function Home() {
             <div>
               <p className="eyebrow reveal" style={{ marginBottom: 20 }}>{t('home.services.eyebrow')}</p>
               <h2 className="reveal reveal-delay-1" style={{ maxWidth: 560, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text)' }}>
-                <SplitText text="Aligning product aesthetics with robust code." />
+                <SplitText text={t('home.services.title')} />
               </h2>
             </div>
             <p className="reveal reveal-delay-2" style={{ alignSelf: 'end', maxWidth: 440 }}>
-              We believe software development shouldn&apos;t be separated from visual craft. We combine digital strategy, UX design, and full-stack development into one continuous flow.
+              {t('home.hero.desc')}
             </p>
           </div>
 
