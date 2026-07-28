@@ -57,7 +57,7 @@ export default function TestimonialsSlider() {
           <div>
             <div style={{ fontWeight: 600, color: 'var(--text)', fontSize: '0.95rem', marginBottom: 4 }}>{t.author}</div>
             <div style={{ fontSize: '0.8rem', color: 'var(--text-3)' }}>
-              {t.role} &mdash; <span style={{ color: 'var(--accent)' }}>{t.co}</span>
+              {t.role} · <span style={{ color: 'var(--accent)' }}>{t.co}</span>
             </div>
           </div>
 

@@ -169,6 +169,6 @@ This file contains the design clone specifications for [Vivid Motion](https://vi
 - [x] Header & footer rebuilt
 - [x] Components rebuilt from Section 6 inventory
 - [x] Backgrounds/surfaces/shadows matched (Section 7)
-- [x] Animations & 3D recreated (Section 8) — manual visual pass
+- [x] Animations & 3D recreated (Section 8): manual visual pass
 - [x] Responsive QA across all breakpoints
 - [x] Side-by-side visual review vs. original

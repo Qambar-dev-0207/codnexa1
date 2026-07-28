@@ -22,7 +22,7 @@ const services = [
     num: '01',
     category: 'Brand & Graphics',
     title: 'Creative & UI Design',
-    desc: 'We craft digital identities that capture your brand\'s essence — from logo systems and visual languages to pixel-perfect interfaces and motion design. Every pixel is intentional.',
+    desc: 'We craft digital identities that capture your brand\'s essence, from logo systems and visual languages to pixel-perfect interfaces and motion design. Every pixel is intentional.',
     deliverables: ['Brand Identity Systems', 'UI / UX Design', 'Motion Design', 'Design Systems', 'Prototyping & Wireframes'],
   },
   {
@@ -43,7 +43,7 @@ const services = [
     num: '04',
     category: 'Cloud',
     title: 'Infrastructure & DevOps',
-    desc: 'We plan and deploy cloud infrastructure that scales elastically with your growth — zero-downtime deploys, CI/CD pipelines, monitoring, and security hardening.',
+    desc: 'We plan and deploy cloud infrastructure that scales elastically with your growth, with zero-downtime deploys, CI/CD pipelines, monitoring, and security hardening.',
     deliverables: ['AWS / GCP / Azure', 'CI/CD Pipelines', 'Docker & Kubernetes', 'Monitoring & Alerting', 'Security Hardening'],
   },
   {
@@ -57,7 +57,7 @@ const services = [
     num: '06',
     category: 'AI & Data',
     title: 'AI Integration',
-    desc: 'Embed intelligent capabilities into your product — LLM-powered features, recommendation engines, computer vision pipelines, and AI-driven analytics dashboards.',
+    desc: 'Embed intelligent capabilities into your product, including LLM-powered features, recommendation engines, computer vision pipelines, and AI-driven analytics dashboards.',
     deliverables: ['LLM Integration (GPT / Gemini)', 'RAG Pipelines', 'Custom AI Features', 'Data Visualisation', 'Predictive Analytics'],
   },
 ];

@@ -19,19 +19,76 @@ export default function Contact() {
   useReveal();
   const [activeTab, setActiveTab] = useState<'form' | 'calendar'>('form');
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmitting, setFormSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+
   const [bookingDate, setBookingDate] = useState<string | null>(null);
   const [bookingTime, setBookingTime] = useState<string | null>(null);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [bookingSubmitting, setBookingSubmitting] = useState(false);
+  const [bookingError, setBookingError] = useState<string | null>(null);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const WEB3FORMS_KEY = '5a5b51dd-cf8d-4e9a-9e1d-c40d7c0f1e8f'; // Web3Forms Access Key
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTimeout(() => setFormSubmitted(true), 600);
+    setFormSubmitting(true);
+    setFormError(null);
+
+    const formData = new FormData(e.currentTarget);
+    formData.append('access_key', WEB3FORMS_KEY);
+    formData.append('subject', 'New Project Brief Submission - Codnexa Studio');
+    formData.append('from_name', 'Codnexa Contact Form');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setFormSubmitted(true);
+      } else {
+        setFormError(data.message || 'Failed to send brief. Please try again.');
+      }
+    } catch (err) {
+      setFormError('Network error. Please check your connection and try again.');
+    } finally {
+      setFormSubmitting(false);
+    }
   };
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
+  const handleBookingSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!bookingDate || !bookingTime) return;
-    setTimeout(() => setBookingConfirmed(true), 600);
+    setBookingSubmitting(true);
+    setBookingError(null);
+
+    const formData = new FormData(e.currentTarget);
+    formData.append('access_key', WEB3FORMS_KEY);
+    formData.append('subject', 'New Call Booking Diagnostic - Codnexa Studio');
+    formData.append('from_name', 'Codnexa Booking System');
+    formData.append('Requested Date', bookingDate);
+    formData.append('Requested Time', bookingTime + ' (EST)');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setBookingConfirmed(true);
+      } else {
+        setBookingError(data.message || 'Failed to book slot. Please try again.');
+      }
+    } catch (err) {
+      setBookingError('Network error. Please check your connection and try again.');
+    } finally {
+      setBookingSubmitting(false);
+    }
   };
 
   const availableDates = [
@@ -85,10 +142,10 @@ export default function Contact() {
                   </div>
                   <div>
                     <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', display: 'block', marginBottom: 4 }}>General Inquiry</span>
-                    <a href="mailto:silverhanzala@gmail.com" style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: 'var(--text)', transition: 'color 0.2s' }}
+                    <a href="mailto:codnexa@gmail.com" style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: 'var(--text)', transition: 'color 0.2s' }}
                       onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
                       onMouseLeave={e => (e.currentTarget.style.color = 'var(--text)')}
-                    >silverhanzala@gmail.com</a>
+                    >codnexa@gmail.com</a>
                   </div>
                 </div>
 
@@ -184,20 +241,25 @@ export default function Contact() {
                   <div>
                     {!formSubmitted ? (
                       <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                        {formError && (
+                          <div style={{ padding: '12px 16px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#ef4444', fontSize: '0.82rem', borderRadius: 2 }}>
+                            {formError}
+                          </div>
+                        )}
                         <div className="form-row">
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             <label htmlFor="name" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Your Name</label>
-                            <input type="text" id="name" required placeholder="Jane Doe" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
+                            <input type="text" id="name" name="name" required placeholder="Jane Doe" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             <label htmlFor="email" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Your Email</label>
-                            <input type="email" id="email" required placeholder="jane@example.com" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
+                            <input type="email" id="email" name="email" required placeholder="jane@example.com" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
                           </div>
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                           <label htmlFor="scope" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Project Focus</label>
-                          <select id="scope" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2, background: 'var(--surface)', appearance: 'none', backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\x27http://www.w3.org/2000/svg\x27 viewBox=\x270 0 24 24\x27 fill=\x27none\x27 stroke=\x27%235a5a5a\x27 stroke-width=\x272\x27 stroke-linecap=\x27round\x27 stroke-linejoin=\x27round\x27%3E%3Cpath d=\x27m6 9 6 6 6-6\x27/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center', backgroundSize: '16px' }}>
+                          <select id="scope" name="project_focus" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2, background: 'var(--surface)', appearance: 'none', backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\x27http://www.w3.org/2000/svg\x27 viewBox=\x270 0 24 24\x27 fill=\x27none\x27 stroke=\x27%235a5a5a\x27 stroke-width=\x272\x27 stroke-linecap=\x27round\x27 stroke-linejoin=\x27round\x27%3E%3Cpath d=\x27m6 9 6 6 6-6\x27/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center', backgroundSize: '16px' }}>
                             <option>Strategy & Scoping Diagnostics</option>
                             <option>Figma UI/UX & Identity Design</option>
                             <option>Next.js Full-Stack Web App</option>
@@ -208,11 +270,11 @@ export default function Contact() {
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                           <label htmlFor="details" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Brief Details</label>
-                          <textarea id="details" rows={5} required placeholder="Describe your product goal, estimated timelines, and features needed..." className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2, resize: 'vertical', minHeight: 120 }} />
+                          <textarea id="details" name="details" rows={5} required placeholder="Describe your product goal, estimated timelines, and features needed..." className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2, resize: 'vertical', minHeight: 120 }} />
                         </div>
 
-                        <button type="submit" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, paddingBlock: 14 }}>
-                          Send Brief <Send size={14} />
+                        <button type="submit" disabled={formSubmitting} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, paddingBlock: 14, opacity: formSubmitting ? 0.7 : 1 }}>
+                          {formSubmitting ? 'Sending Brief...' : <>Send Brief <Send size={14} /></>}
                         </button>
                       </form>
                     ) : (
@@ -239,11 +301,16 @@ export default function Contact() {
                   <div>
                     {!bookingConfirmed ? (
                       <form onSubmit={handleBookingSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                        {bookingError && (
+                          <div style={{ padding: '12px 16px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#ef4444', fontSize: '0.82rem', borderRadius: 2 }}>
+                            {bookingError}
+                          </div>
+                        )}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                           <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.3rem', fontWeight: 400, color: 'var(--text)', display: 'flex', alignItems: 'center', gap: 8 }}>
                             <Sparkles size={15} style={{ color: 'var(--accent)' }} /> Custom Diagnostics
                           </h3>
-                          <p style={{ fontSize: '0.8rem', color: 'var(--text-3)' }}>Select a date and time slot to book an interactive 30-minute system planning call.</p>
+                          <p style={{ fontSize: '0.8rem', color: 'var(--text-3)' }}>Select a date and time slot to book an interactive 30 minute system planning call.</p>
                         </div>
 
                         {/* Date Select */}
@@ -299,25 +366,25 @@ export default function Contact() {
                         <div className="form-row" style={{ gap: 16 }}>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             <label htmlFor="book-name" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Your Name</label>
-                            <input type="text" id="book-name" required placeholder="Jane Doe" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
+                            <input type="text" id="book-name" name="name" required placeholder="Jane Doe" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             <label htmlFor="book-email" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Email Address</label>
-                            <input type="email" id="book-email" required placeholder="jane@example.com" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
+                            <input type="email" id="book-email" name="email" required placeholder="jane@example.com" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
                           </div>
                         </div>
 
                         <button
                           type="submit"
-                          disabled={!bookingDate || !bookingTime}
+                          disabled={!bookingDate || !bookingTime || bookingSubmitting}
                           className="btn btn-primary"
                           style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, paddingBlock: 14,
-                            opacity: (!bookingDate || !bookingTime) ? 0.5 : 1,
-                            pointerEvents: (!bookingDate || !bookingTime) ? 'none' : 'auto',
+                            opacity: (!bookingDate || !bookingTime || bookingSubmitting) ? 0.5 : 1,
+                            pointerEvents: (!bookingDate || !bookingTime || bookingSubmitting) ? 'none' : 'auto',
                           }}
                         >
-                          Confirm Booking <Check size={14} />
+                          {bookingSubmitting ? 'Confirming...' : <>Confirm Booking <Check size={14} /></>}
                         </button>
                       </form>
                     ) : (

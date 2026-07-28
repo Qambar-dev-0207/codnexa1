@@ -134,7 +134,7 @@ function TeaserCard({ tag, title, year, bg, img, delay }: { tag: string; title: 
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Background Image Preview — High Visibility */}
+      {/* Background Image Preview: High Visibility */}
       <div
         style={{
           position: 'absolute',

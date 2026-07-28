@@ -174,7 +174,7 @@ const PROJECTS: Project[] = [
   {
     id: 3, num: '03', title: 'SEO & Growth Analytics',
     category: 'marketing', categoryLabel: 'Marketing / Analytics',
-    desc: 'Data-driven Search Engine Optimization, Google Ads, and performance marketing driving exponential organic traffic & conversion growth.',
+    desc: 'Data driven Search Engine Optimization, Google Ads, and performance marketing driving exponential organic traffic & conversion growth.',
     tags: ['SEO', 'Google Ads', 'Meta Ads', 'Analytics'],
     url: '#',
     img: '/projects/seo-analytics.jpg',
@@ -198,21 +198,21 @@ const PROJECTS: Project[] = [
   {
     id: 6, num: '06', title: 'Byteonik AI Platform',
     category: 'ai', categoryLabel: 'AI / SaaS',
-    desc: 'A full-stack AI-powered platform offering intelligent automation and data-driven insights for modern enterprises.',
+    desc: 'A full stack AI powered platform offering intelligent automation and data driven insights for modern enterprises.',
     tags: ['AI/ML', 'SaaS', 'React', 'APIs'],
     url: 'https://ai.byteoniclabs.com/',
   },
   {
     id: 7, num: '07', title: 'PlanMyVisas',
     category: 'web', categoryLabel: 'Web App / VisaTech',
-    desc: 'End-to-end visa planning and travel documentation platform simplifying global mobility.',
+    desc: 'End to end visa planning and travel documentation platform simplifying global mobility.',
     tags: ['Travel Tech', 'Web App', 'Automation'],
     url: 'https://planmyvisas.com/',
   },
   {
     id: 8, num: '08', title: 'SpotDraft Contract AI',
     category: 'ai', categoryLabel: 'AI / Enterprise',
-    desc: 'AI-powered contract lifecycle management platform trusted by global enterprise teams.',
+    desc: 'AI powered contract lifecycle management platform trusted by global enterprise teams.',
     tags: ['AI', 'LegalTech', 'SaaS'],
     url: 'https://www.spotdraft.com/',
   },

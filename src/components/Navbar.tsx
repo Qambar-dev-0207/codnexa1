@@ -318,8 +318,8 @@ export default function Navbar() {
 
         <div style={{ position: 'absolute', bottom: 40, left: 'var(--gutter)', right: 'var(--gutter)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <a href="mailto:silverhanzala@gmail.com" style={{ fontSize: '0.85rem', color: 'var(--text-2)' }}>
-              silverhanzala@gmail.com
+            <a href="mailto:codnexa@gmail.com" style={{ fontSize: '0.85rem', color: 'var(--text-2)' }}>
+              codnexa@gmail.com
             </a>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', maxWidth: 260 }}>
               {LANGUAGES.map(l => (
