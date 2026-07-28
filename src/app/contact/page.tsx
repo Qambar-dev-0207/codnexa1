@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Mail, Calendar, Check, Send, Sparkles, ArrowUpRight, Phone } from 'lucide-react';
 import DecryptedText from '@/components/DecryptedText';
+import { useLanguage } from '@/components/LanguageProvider';
 
 function useReveal() {
   useEffect(() => {
@@ -17,6 +18,7 @@ function useReveal() {
 
 export default function Contact() {
   useReveal();
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'form' | 'calendar'>('form');
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formSubmitting, setFormSubmitting] = useState(false);
@@ -113,12 +115,14 @@ export default function Contact() {
       <section style={{ paddingTop: 'clamp(120px, 18vw, 200px)', paddingBottom: 'clamp(60px, 8vw, 100px)', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: -100, right: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(27,146,154,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div className="container">
-          <p className="eyebrow reveal" style={{ marginBottom: 24 }}>Collaborate</p>
+          <p className="eyebrow reveal" style={{ marginBottom: 24 }}>{t('contact.hero.eyebrow')}</p>
           <h1 className="reveal reveal-delay-1" style={{ fontSize: 'clamp(4.5rem, 10vw, 9rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.0, color: 'var(--text)' }}>
-            Start a project &<br /><em>see it through.</em>
+            {t('contact.hero.title').split('\n').map((line, i) => (
+              <span key={i}>{i === 0 ? line : <><br /><em>{line}</em></>}</span>
+            ))}
           </h1>
           <p className="reveal reveal-delay-2" style={{ marginTop: 32, maxWidth: 520, fontSize: '1.05rem' }}>
-            Have a product idea or system that needs scaling? Choose your preferred contact method below: fill our brief or book an engineering diagnostic call instantly.
+            {t('contact.hero.desc')}
           </p>
         </div>
       </section>
@@ -131,12 +135,14 @@ export default function Contact() {
             {/* Info Column */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 48 }} className="reveal">
               <div>
-                <p className="eyebrow" style={{ marginBottom: 16 }}>Contact Us</p>
+                <p className="eyebrow" style={{ marginBottom: 16 }}>{t('contact.hero.eyebrow')}</p>
                 <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1.05, color: 'var(--text)' }}>
-                  Get in<br />touch
+                  {t('contact.hero.title').split('\n').map((line, i) => (
+                    <span key={i}>{line}{i === 0 && <br />}</span>
+                  ))}
                 </h2>
                 <p style={{ marginTop: 20, fontSize: '0.92rem', lineHeight: 1.7, color: 'var(--text-2)' }}>
-                  Our team reviews project briefs daily. Expect a detailed response within 24 hours outlining our diagnostic approach and estimated sprint lines.
+                  {t('contact.hero.desc')}
                 </p>
               </div>
 
@@ -147,7 +153,7 @@ export default function Contact() {
                     <Mail size={16} style={{ color: 'var(--accent)' }} />
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', display: 'block', marginBottom: 4 }}>General Inquiry</span>
+                    <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', display: 'block', marginBottom: 4 }}>{t('footer.contact')}</span>
                     <a href="mailto:codnexa@gmail.com" style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: 'var(--text)', transition: 'color 0.2s' }}
                       onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
                       onMouseLeave={e => (e.currentTarget.style.color = 'var(--text)')}
@@ -160,7 +166,7 @@ export default function Contact() {
                     <Phone size={16} style={{ color: 'var(--accent)' }} />
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', display: 'block', marginBottom: 4 }}>Direct Contact</span>
+                    <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', display: 'block', marginBottom: 4 }}>{t('contact.info.hours')}</span>
                     <a href="tel:+916394623162" style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: 'var(--text)', transition: 'color 0.2s' }}
                       onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
                       onMouseLeave={e => (e.currentTarget.style.color = 'var(--text)')}
@@ -177,7 +183,7 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', display: 'block', marginBottom: 6 }}>Instant Chat</span>
+                    <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', display: 'block', marginBottom: 6 }}>WhatsApp</span>
                     <a
                       href="https://wa.me/916394623162"
                       target="_blank"
@@ -193,7 +199,7 @@ export default function Contact() {
                       onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#20ba5a'; }}
                       onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#25D366'; }}
                     >
-                      Chat on WhatsApp (+91 63946 23162) <ArrowUpRight size={15} />
+                      WhatsApp (+91 63946 23162) <ArrowUpRight size={15} />
                     </a>
                   </div>
                 </div>
@@ -201,11 +207,10 @@ export default function Contact() {
 
               {/* Office coordinate */}
               <div style={{ borderTop: '1px solid var(--border)', paddingTop: 32 }}>
-                <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', display: 'block', marginBottom: 12 }}>Studio Coordinates</span>
+                <span style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', display: 'block', marginBottom: 12 }}>{t('contact.info.office')}</span>
                 <p style={{ fontSize: '0.88rem', lineHeight: 1.7, color: 'var(--text-2)' }}>
                   Codnexa Global Studio<br />
-                  Available worldwide via Slack/Teams.<br />
-                  Node: GMT+5:30
+                  {t('contact.info.hours.val')}
                 </p>
               </div>
             </div>
@@ -224,7 +229,7 @@ export default function Contact() {
                     cursor: 'pointer', transition: 'color 0.2s, background 0.2s',
                   }}
                 >
-                  1. Submit Brief
+                  1. {t('contact.tabs.brief')}
                 </button>
                 <button
                   onClick={() => setActiveTab('calendar')}
@@ -235,7 +240,7 @@ export default function Contact() {
                     cursor: 'pointer', transition: 'color 0.2s, background 0.2s',
                   }}
                 >
-                  2. Book Diagnostic
+                  2. {t('contact.tabs.call')}
                 </button>
               </div>
 
@@ -254,17 +259,17 @@ export default function Contact() {
                         )}
                         <div className="form-row">
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                            <label htmlFor="name" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Your Name</label>
+                            <label htmlFor="name" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>{t('contact.form.name')}</label>
                             <input type="text" id="name" name="name" required placeholder="Jane Doe" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                            <label htmlFor="email" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Your Email</label>
+                            <label htmlFor="email" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>{t('contact.form.email')}</label>
                             <input type="email" id="email" name="email" required placeholder="jane@example.com" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
                           </div>
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                          <label htmlFor="scope" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Project Focus</label>
+                          <label htmlFor="scope" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>{t('contact.form.focus')}</label>
                           <select id="scope" name="project_focus" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2, background: 'var(--surface)', appearance: 'none', backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\x27http://www.w3.org/2000/svg\x27 viewBox=\x270 0 24 24\x27 fill=\x27none\x27 stroke=\x27%235a5a5a\x27 stroke-width=\x272\x27 stroke-linecap=\x27round\x27 stroke-linejoin=\x27round\x27%3E%3Cpath d=\x27m6 9 6 6 6-6\x27/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center', backgroundSize: '16px' }}>
                             <option>Strategy & Scoping Diagnostics</option>
                             <option>Figma UI/UX & Identity Design</option>
@@ -275,12 +280,12 @@ export default function Contact() {
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                          <label htmlFor="details" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Brief Details</label>
-                          <textarea id="details" name="details" rows={5} required placeholder="Describe your product goal, estimated timelines, and features needed..." className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2, resize: 'vertical', minHeight: 120 }} />
+                          <label htmlFor="details" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>{t('contact.form.message')}</label>
+                          <textarea id="details" name="details" rows={5} required placeholder={t('contact.form.message.placeholder')} className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2, resize: 'vertical', minHeight: 120 }} />
                         </div>
 
                         <button type="submit" disabled={formSubmitting} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, paddingBlock: 14, opacity: formSubmitting ? 0.7 : 1 }}>
-                          {formSubmitting ? 'Sending Brief...' : <>Send Brief <Send size={14} /></>}
+                          {formSubmitting ? '...' : <>{t('contact.form.submit')} <Send size={14} /></>}
                         </button>
                       </form>
                     ) : (
@@ -289,13 +294,13 @@ export default function Contact() {
                           <Check size={20} />
                         </div>
                         <div>
-                          <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.6rem', fontWeight: 300, marginBottom: 8, color: 'var(--text)' }}>Inquiry Received</h3>
+                          <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.6rem', fontWeight: 300, marginBottom: 8, color: 'var(--text)' }}>{t('contact.form.success.title')}</h3>
                           <p style={{ fontSize: '0.9rem', color: 'var(--text-2)', maxWidth: 320, marginInline: 'auto' }}>
-                            Thank you for sharing your brief. We will review the details and get back to you within 24 hours.
+                            {t('contact.form.success.desc')}
                           </p>
                         </div>
                         <button onClick={() => setFormSubmitted(false)} className="btn btn-outline" style={{ marginTop: 12 }}>
-                          Send another message
+                          {t('contact.form.success.btn')}
                         </button>
                       </div>
                     )}
@@ -371,11 +376,11 @@ export default function Contact() {
 
                         <div className="form-row" style={{ gap: 16 }}>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                            <label htmlFor="book-name" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Your Name</label>
+                            <label htmlFor="book-name" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>{t('contact.form.name')}</label>
                             <input type="text" id="book-name" name="name" required placeholder="Jane Doe" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
                           </div>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                            <label htmlFor="book-email" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>Email Address</label>
+                            <label htmlFor="book-email" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>{t('contact.form.email')}</label>
                             <input type="email" id="book-email" name="email" required placeholder="jane@example.com" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2 }} />
                           </div>
                         </div>
@@ -390,7 +395,7 @@ export default function Contact() {
                             pointerEvents: (!bookingDate || !bookingTime || bookingSubmitting) ? 'none' : 'auto',
                           }}
                         >
-                          {bookingSubmitting ? 'Confirming...' : <>Confirm Booking <Check size={14} /></>}
+                          {bookingSubmitting ? '...' : <>{t('contact.book.submit')} <Check size={14} /></>}
                         </button>
                       </form>
                     ) : (
@@ -399,12 +404,11 @@ export default function Contact() {
                           <Check size={20} />
                         </div>
                         <div>
-                          <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.6rem', fontWeight: 300, marginBottom: 8, color: 'var(--text)' }}>Call Confirmed</h3>
+                          <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.6rem', fontWeight: 300, marginBottom: 8, color: 'var(--text)' }}>{t('contact.book.success.title')}</h3>
                           <div style={{ background: 'var(--bg-alt)', border: '1px solid var(--border)', padding: 18, borderRadius: 2, textAlign: 'left', minWidth: 260, marginInline: 'auto', display: 'flex', flexDirection: 'column', gap: 10, marginBlock: 16 }}>
                             <div style={{ fontSize: '0.6rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 600 }}>System Diagnostics</div>
-                            <div style={{ fontSize: '0.85rem', color: 'var(--text)' }}>📅 Date: {availableDates.find(d => d.value === bookingDate)?.label || bookingDate}</div>
+                            <div style={{ fontSize: '0.85rem', color: 'var(--text)' }}>📅 {t('contact.book.success.desc')}: {availableDates.find(d => d.value === bookingDate)?.label || bookingDate}</div>
                             <div style={{ fontSize: '0.85rem', color: 'var(--text)' }}>⏰ Time: {bookingTime} (EST)</div>
-                            <div style={{ fontSize: '0.72rem', color: 'var(--text-3)', borderTop: '1px solid var(--border)', paddingTop: 10 }}>We sent calendar invite + Meet link to your email.</div>
                           </div>
                         </div>
                         <button

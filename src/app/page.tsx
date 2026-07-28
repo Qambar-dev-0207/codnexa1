@@ -419,12 +419,12 @@ export default function Home() {
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 600, height: 600, background: 'radial-gradient(circle, rgba(27,146,154,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <p className="eyebrow reveal" style={{ marginBottom: 24 }}>Let&apos;s Collaborate</p>
+          <p className="eyebrow reveal" style={{ marginBottom: 24 }}>{t('nav.contact')}</p>
           <h2 className="reveal reveal-delay-1" style={{ marginBottom: 16, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05 }}>
-            Have a project in mind?
+            {t('home.cta.title')}
           </h2>
           <h2 className="reveal reveal-delay-2" style={{ color: 'var(--accent)', marginBottom: 48, fontSize: 'clamp(3.2rem, 7vw, 6rem)', fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05 }}>
-            <em>{t('home.cta.title')}</em>
+            <em>{t('home.hero.cta.project')}</em>
           </h2>
           <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link href="/contact" className="btn btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
