@@ -61,11 +61,15 @@ export default function Footer() {
             {t('footer.desc')}
           </p>
           <div style={{ marginTop: 24, display: 'flex', gap: 16 }}>
-            {['LinkedIn', 'X', 'Instagram', 'Dribbble'].map(s => (
-              <a key={s} href="#" style={{ fontSize: '0.78rem', color: 'var(--text-3)', textDecoration: 'none', transition: 'color 0.2s' }}
+            {[
+              { name: 'LinkedIn', url: 'https://www.linkedin.com/company/codnexa/' },
+              { name: 'X', url: '#' },
+              { name: 'Instagram', url: 'https://www.instagram.com/codnexa?igsh=ajM4ZzUxNm56c3R1' },
+            ].map(s => (
+              <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.78rem', color: 'var(--text-3)', textDecoration: 'none', transition: 'color 0.2s' }}
                 onMouseEnter={e => ((e.target as HTMLElement).style.color = 'var(--text)')}
                 onMouseLeave={e => ((e.target as HTMLElement).style.color = 'var(--text-3)')}
-              >{s}</a>
+              >{s.name}</a>
             ))}
           </div>
         </div>
