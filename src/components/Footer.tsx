@@ -63,7 +63,6 @@ export default function Footer() {
           <div style={{ marginTop: 24, display: 'flex', gap: 16 }}>
             {[
               { name: 'LinkedIn', url: 'https://www.linkedin.com/company/codnexa/' },
-              { name: 'X', url: '#' },
               { name: 'Instagram', url: 'https://www.instagram.com/codnexa' },
             ].map(s => (
               <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.78rem', color: 'var(--text-3)', textDecoration: 'none', transition: 'color 0.2s' }}
