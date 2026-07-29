@@ -172,9 +172,8 @@ function TeaserCard({ tag, title, year, bg, img, delay }: { tag: string; title: 
 
 /* ---------- Marquee ---------- */
 const MARQUEE_ITEMS = [
-  'Strategy', '·', 'Brand Identity', '·', 'UI / UX Design', '·',
-  'Full-Stack Dev', '·', 'Cloud Architecture', '·', 'Mobile Apps', '·',
-  'AI Integration', '·', 'SaaS Products', '·',
+  'Website Development', '·', 'Digital Marketing', '·', 'SEO', '·',
+  'Mobile App Dev', '·', 'ERP & CRM Systems', '·', 'Data Analytics', '·',
 ];
 
 export default function Home() {
@@ -196,10 +195,42 @@ export default function Home() {
   }, []);
 
   const services = [
-    { num: '01', label: t('nav.services'), title: t('about.principles.3.title'), desc: t('about.principles.3.desc') },
-    { num: '02', label: t('nav.work'), title: t('about.principles.2.title'), desc: t('about.principles.2.desc') },
-    { num: '03', label: t('nav.about'), title: t('about.principles.4.title'), desc: t('about.principles.4.desc') },
-    { num: '04', label: t('nav.contact'), title: t('about.principles.1.title'), desc: t('about.principles.1.desc') },
+    {
+      num: '01',
+      label: 'Development',
+      title: 'Website Development',
+      desc: 'High-performance, responsive, and SEO-optimized websites built with modern frameworks, custom designs, and scalable architecture.'
+    },
+    {
+      num: '02',
+      label: 'Growth',
+      title: 'Digital Marketing Services',
+      desc: 'Data-driven marketing campaigns, social media management, targeted advertising, and performance marketing to expand brand reach.'
+    },
+    {
+      num: '03',
+      label: 'Optimization',
+      title: 'SEO (Search Engine Optimization)',
+      desc: 'Technical and content SEO strategies designed to maximize organic search visibility, rankings, and high-conversion traffic.'
+    },
+    {
+      num: '04',
+      label: 'Mobile',
+      title: 'Mobile App Development',
+      desc: 'Native and cross-platform mobile applications for iOS and Android built with fluid UI, robust security, and seamless user experiences.'
+    },
+    {
+      num: '05',
+      label: 'Enterprise',
+      title: 'ERP & CRM Systems',
+      desc: 'Custom enterprise software and integrated CRM/ERP systems tailored to automate workflows and optimize business operations.'
+    },
+    {
+      num: '06',
+      label: 'Intelligence',
+      title: 'Data Analytics',
+      desc: 'Interactive business intelligence dashboards, real-time metrics, and predictive data pipelines to empower data-driven decisions.'
+    },
   ];
 
   const faqs = [

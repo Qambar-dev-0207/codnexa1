@@ -271,11 +271,12 @@ export default function Contact() {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                           <label htmlFor="scope" style={{ fontSize: '0.65rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', fontWeight: 600 }}>{t('contact.form.focus')}</label>
                           <select id="scope" name="project_focus" className="form-input" style={{ border: '1px solid var(--border)', borderRadius: 2, background: 'var(--surface)', appearance: 'none', backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\x27http://www.w3.org/2000/svg\x27 viewBox=\x270 0 24 24\x27 fill=\x27none\x27 stroke=\x27%235a5a5a\x27 stroke-width=\x272\x27 stroke-linecap=\x27round\x27 stroke-linejoin=\x27round\x27%3E%3Cpath d=\x27m6 9 6 6 6-6\x27/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center', backgroundSize: '16px' }}>
-                            <option>Strategy & Scoping Diagnostics</option>
-                            <option>Figma UI/UX & Identity Design</option>
-                            <option>Next.js Full-Stack Web App</option>
-                            <option>Mobile Client (iOS/Android)</option>
-                            <option>Enterprise Cloud Systems</option>
+                            <option>Website Development</option>
+                            <option>Digital Marketing Services</option>
+                            <option>SEO (Search Engine Optimization)</option>
+                            <option>Mobile App Development</option>
+                            <option>ERP & CRM Systems</option>
+                            <option>Data Analytics</option>
                           </select>
                         </div>
 
