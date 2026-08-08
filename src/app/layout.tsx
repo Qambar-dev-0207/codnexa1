@@ -28,10 +28,26 @@ export const metadata: Metadata = {
   title: 'Codnexa | Strategy, Design & Development Studio',
   description: 'Codnexa is a premium strategy, design and development studio. We build high-fidelity digital platforms, brand identities, and software services for ambitious brands.',
   keywords: ['Software Development', 'Design Agency', 'UI/UX Design', 'SaaS', 'Brand Identity', 'Custom Software'],
+  icons: {
+    icon: [
+      { url: '/logo-icon.png', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    shortcut: '/logo-icon.png',
+    apple: '/logo-icon.png',
+  },
   openGraph: {
     title: 'Codnexa | Strategy, Design & Development Studio',
     description: 'We build high-fidelity digital platforms, brand identities, and software services for ambitious brands.',
     type: 'website',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Codnexa Studio',
+      },
+    ],
   },
 };
 

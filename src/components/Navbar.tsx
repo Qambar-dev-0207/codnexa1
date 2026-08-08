@@ -41,6 +41,7 @@ export default function Navbar() {
     { name: t('nav.services'), href: '/services' },
     { name: t('nav.work'),     href: '/portfolio' },
     { name: t('nav.about'),    href: '/about' },
+    { name: t('nav.blog'),     href: '/blog' },
   ];
 
   return (

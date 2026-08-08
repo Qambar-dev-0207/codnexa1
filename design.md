@@ -9,7 +9,7 @@ This file contains the design clone specifications for [Vivid Motion](https://vi
 
 | Field | Value |
 |---|---|
-| Primary URL | https://vividmotion.co/ |
+| Primary URL | |
 | Additional pages/routes | /work, /about, /services, /journal, /contact |
 | Target stack for rebuild | HTML5 + CSS3 + Vanilla JavaScript |
 | Why this reference | Premium, minimal, dark-editorial style featuring high contrast serif headings and smooth animation states. |

@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import { motion, useMotionValue, useSpring, useMotionTemplate } from 'framer-motion';
-import HeroCanvas from '@/components/HeroCanvas';
+
+const HeroCanvas = dynamic(() => import('@/components/HeroCanvas'), { ssr: false });
 import DecryptedText from '@/components/DecryptedText';
 import TypewriterWord from '@/components/TypewriterWord';
 import SplitText from '@/components/SplitText';
