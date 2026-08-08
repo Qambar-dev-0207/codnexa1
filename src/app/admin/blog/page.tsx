@@ -252,9 +252,7 @@ export default function AdminBlogCMSPage() {
                   outline: 'none',
                 }}
               />
-              <span style={{ fontSize: '0.72rem', color: 'var(--text-3)', marginTop: 4, display: 'block' }}>
-                Default key: <code>codnexa_admin_2026</code>
-              </span>
+
             </div>
 
             {authError && (
