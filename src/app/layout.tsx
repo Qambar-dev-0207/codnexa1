@@ -24,7 +24,13 @@ const inter = Inter({
   display: 'swap',
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://codnexa.com';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: './',
+  },
   title: 'Codnexa | Strategy, Design & Development Studio',
   description: 'Codnexa is a premium strategy, design and development studio. We build high-fidelity digital platforms, brand identities, and software services for ambitious brands.',
   keywords: ['Software Development', 'Design Agency', 'UI/UX Design', 'SaaS', 'Brand Identity', 'Custom Software'],
@@ -40,6 +46,7 @@ export const metadata: Metadata = {
     title: 'Codnexa | Strategy, Design & Development Studio',
     description: 'We build high-fidelity digital platforms, brand identities, and software services for ambitious brands.',
     type: 'website',
+    url: siteUrl,
     images: [
       {
         url: '/logo.png',

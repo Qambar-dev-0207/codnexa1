@@ -1,0 +1,35 @@
+import { NextResponse } from 'next/server';
+
+const LLMS_TXT = `# Codnexa Studio
+
+> Codnexa is a premium strategy, design, and software development studio. We build high-fidelity digital platforms, brand identities, and enterprise software services for ambitious brands.
+
+## Core Services
+
+- [Custom Software Development](https://codnexa.com/services#software): Full-stack web and mobile application engineering.
+- [UI/UX & Product Design](https://codnexa.com/services#design): High-fidelity design systems, interface architecture, and branding.
+- [Strategy & Transformation](https://codnexa.com/services#strategy): Technical consulting, digital roadmap formulation, and cloud architecture.
+
+## Primary Pages
+
+- [Homepage](https://codnexa.com/): Studio overview, core philosophy, and featured projects.
+- [About Us](https://codnexa.com/about): Our team, methodology, and values.
+- [Services](https://codnexa.com/services): In-depth breakdown of engineering and design capabilities.
+- [Portfolio](https://codnexa.com/portfolio): Case studies and client work showcase.
+- [Blog](https://codnexa.com/blog): Articles on technology, engineering, design, and digital strategy.
+- [Contact](https://codnexa.com/contact): Get in touch for project inquiries and consultations.
+
+## Contact Information
+
+- Email: codnexa@gmail.com
+- Phone: +91 63946 23162
+- Website: https://codnexa.com
+`;
+
+export async function GET() {
+  return new NextResponse(LLMS_TXT, {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+    },
+  });
+}
