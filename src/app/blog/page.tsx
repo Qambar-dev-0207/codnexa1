@@ -44,7 +44,7 @@ export default function BlogIndexPage() {
         {/* Header Hero */}
         <header style={{ marginBottom: 60, borderBottom: '1px solid var(--border)', paddingBottom: 40 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 14px', border: '1px solid var(--border-mid)', borderRadius: 2, background: 'var(--bg-alt)', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent)', marginBottom: 20 }}>
-            <Sparkles size={14} /> Codnexa Insights
+            <Sparkles size={14} /> Codnexa Blogs
           </div>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 300, lineHeight: 1.1, marginBottom: 20, letterSpacing: '-0.02em' }}>
             Thoughts on Technology, Design & Digital Strategy
@@ -228,7 +228,7 @@ export default function BlogIndexPage() {
         {/* Footer Admin Link */}
         <div style={{ marginTop: 80, borderTop: '1px solid var(--border)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: '0.8rem', color: 'var(--text-3)' }}>
-            Codnexa Insights & Editorial Platform
+            Codnexa Blogs & Editorial Platform
           </span>
           <Link
             href="/admin/blog"

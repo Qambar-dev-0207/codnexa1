@@ -153,7 +153,7 @@ export default function SingleBlogPostPage() {
         <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', marginBottom: 16, color: 'var(--text)' }}>Article Not Found</h2>
         <p style={{ color: 'var(--text-2)', marginBottom: 24 }}>The article you are looking for does not exist or has been removed.</p>
         <Link href="/blog" className="btn btn-primary">
-          <ArrowLeft size={16} /> Back to Insights
+          <ArrowLeft size={16} /> Back to Blogs
         </Link>
       </div>
     );
