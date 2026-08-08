@@ -47,14 +47,21 @@ export const metadata: Metadata = {
     description: 'We build high-fidelity digital platforms, brand identities, and software services for ambitious brands.',
     type: 'website',
     url: siteUrl,
+    siteName: 'Codnexa Studio',
     images: [
       {
-        url: '/logo.png',
+        url: `${siteUrl}/logo.png`,
         width: 1200,
         height: 630,
-        alt: 'Codnexa Studio',
+        alt: 'Codnexa | Strategy, Design & Development Studio',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Codnexa | Strategy, Design & Development Studio',
+    description: 'We build high-fidelity digital platforms, brand identities, and software services for ambitious brands.',
+    images: [`${siteUrl}/logo.png`],
   },
 };
 
