@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Cormorant_Garamond, Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -25,6 +26,7 @@ const inter = Inter({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://codnexa.com';
+const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-NEZY8SE3XT';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -72,6 +74,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`light ${cormorantGaramond.variable} ${inter.variable}`}>
+      <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gaId}');
+          `}
+        </Script>
+      </head>
       <body className="noise" style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
         <ThemeProvider>
           <LanguageProvider>
@@ -90,4 +106,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 
